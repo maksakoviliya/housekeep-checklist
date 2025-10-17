@@ -14,6 +14,8 @@ class Profile extends Component
 
     public string $email = '';
 
+    public string $phone = '';
+
     /**
      * Mount the component.
      */
@@ -21,6 +23,7 @@ class Profile extends Component
     {
         $this->name = Auth::user()->name;
         $this->email = Auth::user()->email;
+        $this->phone = Auth::user()->phone;
     }
 
     /**
@@ -38,6 +41,13 @@ class Profile extends Component
                 'string',
                 'lowercase',
                 'email',
+                'max:255',
+                Rule::unique(User::class)->ignore($user->id),
+            ],
+
+            'phone' => [
+                'required',
+                'string',
                 'max:255',
                 Rule::unique(User::class)->ignore($user->id),
             ],
@@ -62,7 +72,7 @@ class Profile extends Component
         $user = Auth::user();
 
         if ($user->hasVerifiedEmail()) {
-            $this->redirectIntended(default: route('dashboard', absolute: false));
+            $this->redirectIntended(default: route('dashboard.index', absolute: false));
 
             return;
         }

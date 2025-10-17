@@ -24,7 +24,7 @@ class Login extends Component
     public string $password = '';
 
     public bool $remember = false;
-    
+
     public function login(): void
     {
         $this->validate();
@@ -49,7 +49,7 @@ class Login extends Component
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
 
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        $this->redirectIntended(default: route('dashboard.index', absolute: false), navigate: true);
     }
 
     /**
@@ -75,7 +75,7 @@ class Login extends Component
 
         return $user;
     }
-    
+
     protected function ensureIsNotRateLimited(): void
     {
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
@@ -93,7 +93,7 @@ class Login extends Component
             ]),
         ]);
     }
-    
+
     protected function throttleKey(): string
     {
         return Str::transliterate(Str::lower($this->login).'|'.request()->ip());

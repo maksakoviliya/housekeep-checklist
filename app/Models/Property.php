@@ -14,7 +14,6 @@ final class Property extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
         'name',
         'beds',
         'baths',

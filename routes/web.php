@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PropertyController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -11,9 +12,17 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
+Route::prefix('dashboard')->name('dashboard.')
     ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+    ->group(function () {
+        Route::view('/', 'dashboard')->name('index');
+    });
+
+Route::prefix('properties')->name('properties.')
+    ->middleware(['auth', 'verified'])
+    ->group(function () {
+        Route::get('/', [PropertyController::class, 'index'])->name('index');
+    });
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
@@ -26,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
         ->middleware(
             when(
                 Features::canManageTwoFactorAuthentication()
-                    && Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword'),
+                && Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword'),
                 ['password.confirm'],
                 [],
             ),

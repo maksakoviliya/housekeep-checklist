@@ -33,7 +33,7 @@
         <flux:input
                 wire:model="phone"
                 :label="__('Phone')"
-                type="phone"
+                type="string"
                 required
                 autocomplete="phone"
                 placeholder="+1234567890"
