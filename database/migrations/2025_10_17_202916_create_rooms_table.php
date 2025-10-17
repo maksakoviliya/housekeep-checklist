@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-			$table->foreignIdFor(Property::class)->constrained()->onDelete('cascade');
-			$table->string('name');
-			$table->boolean('is_default')->default(true);
+            $table->foreignIdFor(Property::class)->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->boolean('is_default')->default(true);
             $table->timestamps();
         });
     }

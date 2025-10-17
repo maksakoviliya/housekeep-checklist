@@ -12,11 +12,11 @@ final class Task extends Model
 {
     /** @use HasFactory<TaskFactory> */
     use HasFactory;
-	
-	protected $fillable = [
-		'property_id',
-		'room_id',
-		'text',
-		'is_default',
-	];
+
+    protected $fillable = [
+        'property_id',
+        'room_id',
+        'text',
+        'is_default',
+    ];
 }

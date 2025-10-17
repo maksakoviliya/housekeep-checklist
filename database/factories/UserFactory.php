@@ -12,30 +12,30 @@ use Illuminate\Support\Str;
 class UserFactory extends Factory
 {
     protected static ?string $password;
-	
+
     public function definition(): array
     {
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-	        'phone' => fake()->e164PhoneNumber(),
+            'phone' => fake()->e164PhoneNumber(),
             'email_verified_at' => now(),
             'password' => static::$password ??= 'password',
             'remember_token' => Str::random(10),
             'two_factor_secret' => Str::random(10),
             'two_factor_recovery_codes' => Str::random(10),
             'two_factor_confirmed_at' => now(),
-	        'role' => fake()->randomElement(UserRole::cases())->value,
+            'role' => fake()->randomElement(UserRole::cases())->value,
         ];
     }
-	
+
     public function unverified(): static
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
-	
+
     public function withoutTwoFactor(): static
     {
         return $this->state(fn (array $attributes) => [

@@ -17,9 +17,9 @@ final class PropertyFactory extends Factory
     {
         return [
             'name' => fake()->streetName(),
-	        'user_id' => User::factory(),
-			'beds' => fake()->numberBetween(1, 5),
-			'baths' => fake()->numberBetween(1, 5),
+            'user_id' => User::factory(),
+            'beds' => fake()->numberBetween(1, 5),
+            'baths' => fake()->numberBetween(1, 5),
         ];
     }
 }

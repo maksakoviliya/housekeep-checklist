@@ -10,12 +10,12 @@ use Illuminate\Database\Eloquent\Model;
 
 final class Room extends Model
 {
-	/** @use HasFactory<RoomFactory> */
-	use HasFactory;
+    /** @use HasFactory<RoomFactory> */
+    use HasFactory;
 
-	protected $fillable = [
-		'property_id',
-		'name',
-		'is_default',
-	];
+    protected $fillable = [
+        'property_id',
+        'name',
+        'is_default',
+    ];
 }

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-			$table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
-			$table->string('name');
-			$table->unsignedSmallInteger('beds')->default(2);
-			$table->unsignedSmallInteger('baths')->default(1);
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->unsignedSmallInteger('beds')->default(2);
+            $table->unsignedSmallInteger('baths')->default(1);
             $table->timestamps();
         });
     }

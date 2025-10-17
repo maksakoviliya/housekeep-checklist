@@ -14,10 +14,10 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-			$table->foreignIdFor(Property::class)->constrained()->onDelete('cascade');
-			$table->foreignIdFor(Room::class)->constrained()->onDelete('cascade');
-			$table->text('task');
-			$table->boolean('is_default')->default(true);
+            $table->foreignIdFor(Property::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Room::class)->constrained()->onDelete('cascade');
+            $table->text('task');
+            $table->boolean('is_default')->default(true);
             $table->timestamps();
         });
     }

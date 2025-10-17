@@ -13,12 +13,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 final class RoomFactory extends Factory
 {
-	public function definition(): array
-	{
-		return [
-			'property_id' => Property::factory(),
-			'name' => fake()->word(),
-			'is_default' => fake()->boolean(80),
-		];
-	}
+    public function definition(): array
+    {
+        return [
+            'property_id' => Property::factory(),
+            'name' => fake()->word(),
+            'is_default' => fake()->boolean(80),
+        ];
+    }
 }

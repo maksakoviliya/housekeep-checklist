@@ -17,10 +17,10 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-	        'property_id' => Property::factory(),
-	        'room_id' => Room::factory(),
-	        'text' => fake()->text(),
-	        'is_default' => fake()->boolean(70),
+            'property_id' => Property::factory(),
+            'room_id' => Room::factory(),
+            'text' => fake()->text(),
+            'is_default' => fake()->boolean(70),
         ];
     }
 }

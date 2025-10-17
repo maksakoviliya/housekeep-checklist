@@ -16,15 +16,15 @@ return new class extends Migration
     {
         Schema::create('checklists', function (Blueprint $table) {
             $table->id();
-			$table->foreignIdFor(Task::class)->constrained()->cascadeOnDelete();
-			$table->foreignIdFor(Property::class)->constrained()->cascadeOnDelete();
-			$table->foreignIdFor(Room::class)->constrained()->cascadeOnDelete();
-	        $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
-			$table->dateTime('started_at')->nullable();
-			$table->dateTime('finished_at')->nullable();
-			$table->boolean('is_checked')->default(false);
-			$table->text('notes')->nullable();
-			$table->string('image')->nullable();
+            $table->foreignIdFor(Task::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Property::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Room::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
+            $table->dateTime('started_at')->nullable();
+            $table->dateTime('finished_at')->nullable();
+            $table->boolean('is_checked')->default(false);
+            $table->text('notes')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
