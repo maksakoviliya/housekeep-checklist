@@ -27,6 +27,7 @@ class Login extends Component
 
     public function login(): void
     {
+        dd('login');
         $this->validate();
 
         $this->ensureIsNotRateLimited();

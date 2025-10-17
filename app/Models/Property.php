@@ -4,10 +4,24 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Policies\PropertyPolicy;
 use Database\Factories\PropertyFactory;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
+/**
+ * App\Models\Property
+ *
+ * @property int $id
+ * @property string $name
+ * @property int $beds
+ * @property int $baths
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ */
+#[UsePolicy(PropertyPolicy::class)]
 final class Property extends Model
 {
     /** @use HasFactory<PropertyFactory> */

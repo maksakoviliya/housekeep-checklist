@@ -12,6 +12,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -30,6 +31,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property Carbon|null $email_verified_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read Collection $properties
  * @property-read Collection $ownedProperties
  * @property-read Collection $housekeepingProperties
  */
@@ -87,15 +89,20 @@ final class User extends Authenticatable
             ->implode('');
     }
 
-    public function ownedProperties()
+    public function properties(): BelongsToMany
     {
-        return $this->belongsToMany(Property::class)
+        return $this->belongsToMany(Property::class);
+    }
+
+    public function ownedProperties(): BelongsToMany
+    {
+        return $this->properties()
             ->wherePivot('type', PropertyOwnership::OWNER->value);
     }
 
-    public function housekeepingProperties()
+    public function housekeepingProperties(): BelongsToMany
     {
-        return $this->belongsToMany(Property::class)
+        return $this->properties()
             ->wherePivot('type', PropertyOwnership::HOUSEKEEPER->value);
     }
 }

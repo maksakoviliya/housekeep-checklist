@@ -9,10 +9,10 @@
         <flux:input
             wire:model="login"
             :label="__('Login')"
-            type="email"
+            type="string"
             required
             autofocus
-            autocomplete="email"
+            autocomplete="login"
             :placeholder="__('Email or phone')"
         />
 

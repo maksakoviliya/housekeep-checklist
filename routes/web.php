@@ -5,6 +5,7 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\TwoFactor;
+use App\Models\Property;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -21,7 +22,11 @@ Route::prefix('dashboard')->name('dashboard.')
 Route::prefix('properties')->name('properties.')
     ->middleware(['auth', 'verified'])
     ->group(function () {
-        Route::get('/', [PropertyController::class, 'index'])->name('index');
+        Route::get('/', [PropertyController::class, 'index'])
+            ->name('index');
+        Route::view('create', 'properties.create')
+            ->can('create', Property::class)
+            ->name('create');
     });
 
 Route::middleware(['auth'])->group(function () {

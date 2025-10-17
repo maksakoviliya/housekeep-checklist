@@ -5,7 +5,9 @@
                 <flux:heading level="3">{{ __('Properties') }}</flux:heading>
                 <flux:text class="hidden sm:inline">{{ __('This information about properties.') }}</flux:text>
             </div>
-            <flux:button icon="plus">{{ __('Add property') }}</flux:button>
+            @can('create', App\Models\Property::class)
+                <flux:button icon="plus" href="{{ route('properties.create') }}">{{ __('Add property') }}</flux:button>
+            @endcan
         </div>
         <div class="mt-8 flow-root">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -15,19 +17,20 @@
                             <x-table.heading>{{ __('Name') }}</x-table.heading>
                             <x-table.heading>{{ __('Beds') }}</x-table.heading>
                             <x-table.heading>{{ __('Baths') }}</x-table.heading>
+                            <x-table.heading>{{ __('Created') }}</x-table.heading>
                             <x-table.heading></x-table.heading>
                         </x-slot:head>
                         <x-slot:body>
                             @foreach($properties as $property)
                                 <x-table.row>
                                     <x-table.cell>{{ $property->name }}</x-table.cell>
-                                    <x-table.cell>{{ $property->address }}</x-table.cell>
-                                    <x-table.cell>{{ $property->city }}</x-table.cell>
-                                    <x-table.cell>{{ $property->state }}</x-table.cell>
-                                    <x-table.cell>{{ $property->zip_code }}</x-table.cell>
+                                    <x-table.cell>{{ $property->beds }}</x-table.cell>
+                                    <x-table.cell>{{ $property->baths }}</x-table.cell>
+                                    <x-table.cell>{{ $property->created_at->format('d.m.Y H:i') }}</x-table.cell>
                                     <x-table.cell class="text-right">
-                                        <a href="{{ route('properties.edit', $property) }}"
-                                           class="text-indigo-600 hover:text-indigo-900">{{ __('Edit') }}</a>
+                                        <flux:tooltip content="{{ __('Edit') }}">
+                                            <flux:button size="sm" icon="pencil"></flux:button>
+                                        </flux:tooltip>
                                     </x-table.cell>
                                 </x-table.row>
                             @endforeach
@@ -36,6 +39,8 @@
                             {{__('No properties found.')}}
                         </x-slot:empty>
                     </x-table.table>
+
+                    {!! $properties->links() !!}
                 </div>
             </div>
         </div>
