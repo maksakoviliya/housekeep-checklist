@@ -20,12 +20,28 @@ class AuthenticationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_users_can_authenticate_using_the_login_screen(): void
+    public function test_users_can_authenticate_using_the_login_screen_and_email(): void
     {
         $user = User::factory()->withoutTwoFactor()->create();
 
         $response = Livewire::test(Login::class)
-            ->set('email', $user->email)
+            ->set('login', $user->email)
+            ->set('password', 'password')
+            ->call('login');
+
+        $response
+            ->assertHasNoErrors()
+            ->assertRedirect(route('dashboard', absolute: false));
+
+        $this->assertAuthenticated();
+    }
+
+    public function test_users_can_authenticate_using_the_login_screen_and_phone(): void
+    {
+        $user = User::factory()->withoutTwoFactor()->create();
+
+        $response = Livewire::test(Login::class)
+            ->set('login', $user->phone)
             ->set('password', 'password')
             ->call('login');
 
@@ -41,7 +57,7 @@ class AuthenticationTest extends TestCase
         $user = User::factory()->create();
 
         $response = Livewire::test(Login::class)
-            ->set('email', $user->email)
+            ->set('login', $user->email)
             ->set('password', 'wrong-password')
             ->call('login');
 
@@ -70,7 +86,7 @@ class AuthenticationTest extends TestCase
         ])->save();
 
         $response = Livewire::test('auth.login')
-            ->set('email', $user->email)
+            ->set('login', $user->email)
             ->set('password', 'password')
             ->call('login');
 

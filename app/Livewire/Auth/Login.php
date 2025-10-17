@@ -17,17 +17,14 @@ use Livewire\Component;
 #[Layout('components.layouts.auth')]
 class Login extends Component
 {
-    #[Validate('required|string|email')]
-    public string $email = '';
+    #[Validate('required|string')]
+    public string $login = '';
 
     #[Validate('required|string')]
     public string $password = '';
 
     public bool $remember = false;
-
-    /**
-     * Handle an incoming authentication request.
-     */
+    
     public function login(): void
     {
         $this->validate();
@@ -56,11 +53,17 @@ class Login extends Component
     }
 
     /**
-     * Validate the user's credentials.
+     * @throws ValidationException
      */
     protected function validateCredentials(): User
     {
-        $user = Auth::getProvider()->retrieveByCredentials(['email' => $this->email, 'password' => $this->password]);
+        $loginField = filter_var($this->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+
+        /** @var User $user */
+        $user = Auth::getProvider()->retrieveByCredentials([
+            $loginField => $this->login,
+            'password' => $this->password,
+        ]);
 
         if (! $user || ! Auth::getProvider()->validateCredentials($user, ['password' => $this->password])) {
             RateLimiter::hit($this->throttleKey());
@@ -72,10 +75,7 @@ class Login extends Component
 
         return $user;
     }
-
-    /**
-     * Ensure the authentication request is not rate limited.
-     */
+    
     protected function ensureIsNotRateLimited(): void
     {
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
@@ -87,18 +87,15 @@ class Login extends Component
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => __('auth.throttle', [
+            'login' => __('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
         ]);
     }
-
-    /**
-     * Get the authentication rate limiting throttle key.
-     */
+    
     protected function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
+        return Str::transliterate(Str::lower($this->login).'|'.request()->ip());
     }
 }

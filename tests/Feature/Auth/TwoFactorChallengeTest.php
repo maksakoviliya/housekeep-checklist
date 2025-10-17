@@ -43,7 +43,7 @@ class TwoFactorChallengeTest extends TestCase
         ])->save();
 
         Livewire::test('auth.login')
-            ->set('email', $user->email)
+            ->set('login', $user->email)
             ->set('password', 'password')
             ->call('login')
             ->assertRedirect(route('two-factor.login'))
