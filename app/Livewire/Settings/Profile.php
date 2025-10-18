@@ -17,7 +17,7 @@ final class Profile extends Component
     public string $email = '';
 
     public string $phone = '';
-    
+
     public string $role = '';
 
     /**

@@ -51,7 +51,7 @@ final class Create extends Component
         ]);
 
         return $this->redirect(route('properties.edit', [
-            'property' => $property->id
+            'property' => $property->id,
         ]));
     }
 

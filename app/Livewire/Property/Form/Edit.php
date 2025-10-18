@@ -40,7 +40,7 @@ class Edit extends Component
             $this->userId = $user->id;
         }
     }
-    
+
     public function mount(Property $property): void
     {
         if (Gate::denies('update', $property)) {
@@ -57,17 +57,17 @@ class Edit extends Component
     public function submit(): void
     {
         $this->validate();
-        
+
         $this->propertyService->updateProperty($this->property, [
             'name' => $this->name,
             'beds' => $this->beds,
             'baths' => $this->baths,
             'user_id' => $this->userId,
         ]);
-        
+
         $this->dispatch('property-updated');
     }
-    
+
     public function render(): Factory|View
     {
         return view('livewire.property.form.edit');

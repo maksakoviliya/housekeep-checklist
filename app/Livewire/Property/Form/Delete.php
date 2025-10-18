@@ -17,14 +17,14 @@ final class Delete extends Component
     {
         $this->property = $property;
     }
-    
+
     public function deleteProperty(): void
     {
         $this->property->delete();
 
         $this->redirect(route('properties.index'));
     }
-    
+
     public function render(): Factory|View
     {
         return view('livewire.property.form.delete');

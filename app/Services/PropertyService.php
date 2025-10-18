@@ -52,4 +52,16 @@ final readonly class PropertyService
 
         return $property->refresh();
     }
+
+    public function getRoomsForProperty(Property $property): LengthAwarePaginator
+    {
+        return $property->rooms()->paginate();
+    }
+
+    public function createRoom(array $data, Property $property)
+    {
+        return $property->rooms()->create([
+            'name' => Arr::get($data, 'name'),
+        ]);
+    }
 }

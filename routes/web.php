@@ -3,6 +3,8 @@
 use App\Http\Controllers\PropertyController;
 use App\Livewire\Property\Form\Create as CreateProperty;
 use App\Livewire\Property\Form\Edit as EditProperty;
+use App\Livewire\Property\Room\Form\Create as CreateRoom;
+use App\Livewire\Property\Room\Form\Edit as EditRoom;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -21,7 +23,8 @@ Route::prefix('dashboard')->name('dashboard.')
         Route::view('/', 'dashboard')->name('index');
     });
 
-Route::prefix('properties')->name('properties.')
+Route::prefix('properties')
+    ->name('properties.')
     ->middleware(['auth', 'verified'])
     ->group(function () {
         Route::get('/', [PropertyController::class, 'index'])
@@ -29,8 +32,18 @@ Route::prefix('properties')->name('properties.')
         Route::get('create', CreateProperty::class)
             ->can('create', Property::class)
             ->name('create');
-        Route::get('{property}', EditProperty::class)
-            ->name('edit');
+
+        Route::prefix('{property}')
+            ->group(function () {
+                Route::get('/', EditProperty::class)
+                    ->name('edit');
+                Route::get('/rooms', [PropertyController::class, 'rooms'])
+                    ->name('rooms.index');
+                Route::get('/rooms/create', CreateRoom::class)
+                    ->name('rooms.create');
+                Route::get('/rooms/{room}', EditRoom::class)
+                    ->name('rooms.edit');
+            });
     });
 
 Route::middleware(['auth'])->group(function () {

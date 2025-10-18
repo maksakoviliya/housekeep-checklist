@@ -7,7 +7,18 @@ namespace App\Models;
 use Database\Factories\RoomFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
+/**
+ * App\Models\Room
+ *
+ * @property int $id
+ * @property int $property_id
+ * @property string $name
+ * @property bool $is_default
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ */
 final class Room extends Model
 {
     /** @use HasFactory<RoomFactory> */
