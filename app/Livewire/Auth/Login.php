@@ -25,9 +25,8 @@ class Login extends Component
 
     public bool $remember = false;
 
-    public function login(): void
+    public function submit(): void
     {
-        dd('login');
         $this->validate();
 
         $this->ensureIsNotRateLimited();
@@ -70,7 +69,7 @@ class Login extends Component
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'login' => __('auth.failed'),
             ]);
         }
 

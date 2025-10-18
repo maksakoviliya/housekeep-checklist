@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -32,7 +33,6 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Collection $properties
- * @property-read Collection $ownedProperties
  * @property-read Collection $housekeepingProperties
  */
 #[UsePolicy(UserPolicy::class)]
@@ -85,24 +85,17 @@ final class User extends Authenticatable
         return Str::of($this->name)
             ->explode(' ')
             ->take(2)
-            ->map(fn ($word) => Str::substr($word, 0, 1))
+            ->map(fn($word) => Str::substr($word, 0, 1))
             ->implode('');
     }
 
-    public function properties(): BelongsToMany
+    public function properties(): HasMany
     {
-        return $this->belongsToMany(Property::class);
-    }
-
-    public function ownedProperties(): BelongsToMany
-    {
-        return $this->properties()
-            ->wherePivot('type', PropertyOwnership::OWNER->value);
+        return $this->hasMany(Property::class);
     }
 
     public function housekeepingProperties(): BelongsToMany
     {
-        return $this->properties()
-            ->wherePivot('type', PropertyOwnership::HOUSEKEEPER->value);
+        return $this->belongsToMany(Property::class);
     }
 }

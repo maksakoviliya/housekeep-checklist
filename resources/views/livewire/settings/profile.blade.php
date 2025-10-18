@@ -28,6 +28,8 @@
             </div>
 
             <flux:input wire:model="phone" :label="__('Phone')" type="string" required autocomplete="email" />
+            
+            <flux:input wire:model="role" :label="__('Role')" readonly disabled type="string" />
 
             <div class="flex items-center gap-4">
                 <div class="flex items-center justify-end">

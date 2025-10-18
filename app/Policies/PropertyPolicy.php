@@ -40,7 +40,7 @@ final class PropertyPolicy
             return true;
         }
 
-        return $user->ownedProperties()->where('properties.id', $property->id)->exists();
+        return $user->properties()->where('properties.id', $property->id)->exists();
     }
 
     public function delete(User $user, Property $property): bool

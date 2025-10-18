@@ -14,7 +14,7 @@
     @if ($body->isEmpty())
         <tr>
             <td colspan="100"
-                class="text-center p-3 text-sm font-medium text-zinc-800 dark:text-white/60">
+                class="text-center p-3 text-sm font-medium text-zinc-800/60 dark:text-white/60">
                 {{ $empty }}
             </td>
         </tr>

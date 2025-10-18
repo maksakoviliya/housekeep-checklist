@@ -9,6 +9,7 @@ use Database\Factories\PropertyFactory;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
@@ -20,6 +21,7 @@ use Illuminate\Support\Carbon;
  * @property int $baths
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read User $owner
  */
 #[UsePolicy(PropertyPolicy::class)]
 final class Property extends Model
@@ -28,8 +30,14 @@ final class Property extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'name',
         'beds',
         'baths',
     ];
+
+    public function owner(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

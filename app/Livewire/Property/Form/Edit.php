@@ -1,18 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Livewire\Property\Form;
 
+use App\Models\Property;
 use App\Models\User;
 use App\Services\PropertyService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
-final class Create extends Component
+class Edit extends Component
 {
+    public Property $property;
+
     #[Validate('required|string|max:255')]
     public string $name = '';
 
@@ -38,25 +40,36 @@ final class Create extends Component
             $this->userId = $user->id;
         }
     }
+    
+    public function mount(Property $property): void
+    {
+        if (Gate::denies('update', $property)) {
+            abort(403);
+        }
 
-    public function submit(): null
+        $this->property = $property;
+        $this->name = $property->name;
+        $this->beds = $property->beds;
+        $this->baths = $property->baths;
+        $this->userId = $property->user_id;
+    }
+
+    public function submit(): void
     {
         $this->validate();
-
-        $property = $this->propertyService->createProperty([
+        
+        $this->propertyService->updateProperty($this->property, [
             'name' => $this->name,
             'beds' => $this->beds,
             'baths' => $this->baths,
             'user_id' => $this->userId,
         ]);
-
-        return $this->redirect(route('properties.edit', [
-            'property' => $property->id
-        ]));
+        
+        $this->dispatch('property-updated');
     }
-
+    
     public function render(): Factory|View
     {
-        return view('livewire.property.form.create');
+        return view('livewire.property.form.edit');
     }
 }

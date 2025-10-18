@@ -4,7 +4,7 @@
     <!-- Session Status -->
     <x-auth-session-status class="text-center" :status="session('status')" />
 
-    <form method="POST" wire:submit="login" class="flex flex-col gap-6">
+    <form method="POST" wire:submit="submit" class="flex flex-col gap-6">
         <!-- Login -->
         <flux:input
             wire:model="login"

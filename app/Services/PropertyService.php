@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Enums\PropertyOwnership;
 use App\Enums\UserRole;
 use App\Models\Property;
 use App\Models\User;
@@ -20,27 +19,37 @@ final readonly class PropertyService
         }
 
         if ($user->role === UserRole::USER) {
-            return $user->ownedProperties()->paginate();
+            return $user->properties()->paginate();
         }
 
         return $user->housekeepingProperties()->paginate();
     }
 
-    public function createPropertyForUser(array $data, User|int $user): Property
+    public function createProperty(array $data): Property
     {
-        $user = $user instanceof User ? $user : User::query()->findOrFail($user);
-
-        $property = Property::query()
+        return Property::query()
             ->create([
                 'name' => Arr::get($data, 'name'),
                 'beds' => Arr::get($data, 'beds'),
                 'baths' => Arr::get($data, 'baths'),
+                'user_id' => Arr::get($data, 'user_id'),
             ]);
+    }
 
-        $user->ownedProperties()->attach($property, [
-            'type' => PropertyOwnership::OWNER->value
-        ]);
+    public function updateProperty(Property $property, array $data): Property
+    {
+        $data = [
+            'name' => Arr::get($data, 'name'),
+            'beds' => Arr::get($data, 'beds'),
+            'baths' => Arr::get($data, 'baths'),
+        ];
 
-        return $property;
+        $userId = Arr::get($data, 'userId');
+        if ($userId && $property->user_id !== $userId) {
+            $data['user_id'] = $userId;
+        }
+        $property->update($data);
+
+        return $property->refresh();
     }
 }

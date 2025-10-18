@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\PropertyController;
+use App\Livewire\Property\Form\Create as CreateProperty;
+use App\Livewire\Property\Form\Edit as EditProperty;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -24,9 +26,11 @@ Route::prefix('properties')->name('properties.')
     ->group(function () {
         Route::get('/', [PropertyController::class, 'index'])
             ->name('index');
-        Route::view('create', 'properties.create')
+        Route::get('create', CreateProperty::class)
             ->can('create', Property::class)
             ->name('create');
+        Route::get('{property}', EditProperty::class)
+            ->name('edit');
     });
 
 Route::middleware(['auth'])->group(function () {
