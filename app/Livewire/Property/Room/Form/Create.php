@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Livewire\Property\Room\Form;
 
 use App\Models\Property;
-use App\Models\User;
 use App\Services\PropertyService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -32,7 +31,7 @@ final class Create extends Component
 
     public function __construct()
     {
-        $this->propertyService = new PropertyService();
+        $this->propertyService = new PropertyService;
     }
 
     public function mount(Property $property): void
@@ -45,7 +44,7 @@ final class Create extends Component
         $this->validate();
 
         $room = $this->propertyService->createRoom([
-            'name' => $this->name
+            'name' => $this->name,
         ], $this->property);
 
         return $this->redirect(route('properties.rooms.edit', [

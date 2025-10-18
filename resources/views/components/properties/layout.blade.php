@@ -9,8 +9,6 @@
                     'property' => $property->id,
                 ])}}" :current="request()->is('properties/*/rooms/*') || request()->is('properties/*/rooms')"
                                wire:navigate>{{ __('Rooms') }}</flux:navlist.item>
-            {{--            <flux:navlist.item :href="route('settings.appearance')" :current="request()->routeIs('settings.appearance')"--}}
-            {{--                               wire:navigate>{{ __('Appearance') }}</flux:navlist.item>--}}
         </flux:navlist>
     </div>
 
@@ -26,7 +24,7 @@
 
                 {{ $headingAction ?? '' }}
             </div>
-            
+
             {{ $slot }}
         </div>
     </div>

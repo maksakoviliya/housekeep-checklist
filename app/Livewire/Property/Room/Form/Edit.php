@@ -4,7 +4,6 @@ namespace App\Livewire\Property\Room\Form;
 
 use App\Models\Property;
 use App\Models\Room;
-use App\Services\PropertyService;
 use App\Services\RoomService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -24,7 +23,7 @@ class Edit extends Component
 
     public function __construct()
     {
-        $this->roomService = new RoomService();
+        $this->roomService = new RoomService;
     }
 
     public function mount(Property $property, Room $room): void
