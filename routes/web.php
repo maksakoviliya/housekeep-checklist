@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ScheduleController;
+use App\Livewire\Admin\Rooms;
+use App\Livewire\Admin\Tasks;
 use App\Livewire\Property\Form\Create as CreateProperty;
 use App\Livewire\Property\Form\Edit as EditProperty;
 use App\Livewire\Property\Room\Form\Create as CreateRoom;
@@ -12,6 +14,7 @@ use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\TwoFactor;
 use App\Models\Property;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -23,6 +26,14 @@ Route::prefix('dashboard')->name('dashboard.')
     ->middleware(['auth', 'verified'])
     ->group(function () {
         Route::view('/', 'dashboard')->name('index');
+
+        Route::can('viewDashboard', User::class)
+            ->group(function () {
+                Route::get('/rooms', Rooms::class)
+                    ->name('rooms');
+                Route::get('/tasks', Tasks::class)
+                    ->name('tasks');
+            });
     });
 
 Route::prefix('properties')
