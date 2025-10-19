@@ -92,9 +92,4 @@ final class User extends Authenticatable
     {
         return $this->hasMany(Property::class);
     }
-
-    public function housekeepingProperties(): BelongsToMany
-    {
-        return $this->belongsToMany(Property::class);
-    }
 }

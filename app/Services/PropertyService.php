@@ -12,7 +12,7 @@ use Illuminate\Support\Arr;
 
 final readonly class PropertyService
 {
-    public function getPropertiesForUser(User $user): LengthAwarePaginator
+    public function getPropertiesForUser(User $user): ?LengthAwarePaginator
     {
         if ($user->role === UserRole::ADMIN) {
             return Property::query()->paginate();
@@ -22,7 +22,7 @@ final readonly class PropertyService
             return $user->properties()->paginate();
         }
 
-        return $user->housekeepingProperties()->paginate();
+        return null;
     }
 
     public function createProperty(array $data): Property

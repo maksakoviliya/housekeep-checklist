@@ -8,6 +8,7 @@ use Database\Factories\TaskFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -15,6 +16,8 @@ use Illuminate\Support\Carbon;
  *
  * @property int $id
  * @property string $task
+ * @property int $property_id
+ * @property int $room_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
@@ -29,4 +32,9 @@ final class Task extends Model
         'task',
         'is_default',
     ];
+
+    public function checklist(): HasOne
+    {
+        return $this->hasOne(Checklist::class);
+    }
 }

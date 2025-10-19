@@ -6,7 +6,8 @@
                 <flux:text class="hidden sm:inline">{{ __('This information about properties.') }}</flux:text>
             </div>
             @can('create', App\Models\Property::class)
-                <flux:button icon="plus" href="{{ route('properties.create') }}" wire:navigate>{{ __('Create property') }}</flux:button>
+                <flux:button icon="plus" href="{{ route('properties.create') }}"
+                             wire:navigate>{{ __('Create property') }}</flux:button>
             @endcan
         </div>
         <div class="mt-8 flow-root">

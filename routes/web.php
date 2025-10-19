@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\ScheduleController;
 use App\Livewire\Property\Form\Create as CreateProperty;
 use App\Livewire\Property\Form\Edit as EditProperty;
 use App\Livewire\Property\Room\Form\Create as CreateRoom;
 use App\Livewire\Property\Room\Form\Edit as EditRoom;
+use App\Livewire\Schedule\Item as ScheduleItem;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -37,7 +39,7 @@ Route::prefix('properties')
             ->group(function () {
                 Route::get('/', EditProperty::class)
                     ->name('edit');
-                
+
                 Route::prefix('rooms')
                     ->name('rooms.')
                     ->group(function () {
@@ -46,14 +48,16 @@ Route::prefix('properties')
                         Route::get('/create', CreateRoom::class)
                             ->name('create');
                         Route::get('/{room}', EditRoom::class)
-                            ->name('edit'); 
+                            ->name('edit');
                     });
-                
+
                 Route::prefix('schedule')
                     ->name('schedule.')
                     ->group(function () {
                         Route::get('/', [PropertyController::class, 'schedule'])
                             ->name('index');
+                        Route::get('{schedule}', ScheduleItem::class)
+                            ->name('view');
                     });
             });
     });
@@ -77,4 +81,4 @@ Route::middleware(['auth'])->group(function () {
         ->name('two-factor.show');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

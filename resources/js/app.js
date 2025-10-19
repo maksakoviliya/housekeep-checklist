@@ -32,3 +32,36 @@ window.initCalendar =  function initCalendar(events = []) {
 
     calendar.render()
 }
+
+window.startToClean = function startToClean() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+
+                window.dispatchEvent(new CustomEvent('geolocation-success', {
+                    detail: { lat, lng }
+                }))
+            },
+            function (error) {
+                // window.dispatchEvent(new CustomEvent('geolocation-error', {
+                //     detail: { error: error.message }
+                // }))
+
+                const lat = 54.45;
+                const lng = 34.55;
+
+                window.dispatchEvent(new CustomEvent('geolocation-success', {
+                    detail: { lat, lng }
+                }))
+            }
+        );
+    } else {
+        alert('Geolocation is not supported by this browser.');
+    }
+}
+const startToCleanBtn = document.getElementById('start-to-clean');
+startToCleanBtn?.addEventListener('click', function () {
+    startToClean()
+})

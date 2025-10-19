@@ -13,7 +13,7 @@ use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Schedule
- *  
+ *
  * @property int $id
  * @property int $property_id
  * @property int $user_id
@@ -25,14 +25,14 @@ final class Schedule extends Model
 {
     /** @use HasFactory<ScheduleFactory> */
     use HasFactory;
-    
+
     protected $fillable = [
         'property_id',
         'user_id',
         'scheduled_at',
         'status',
     ];
-    
+
     protected $casts = [
         'scheduled_at' => 'datetime',
         'status' => ScheduleStatus::class,
@@ -41,5 +41,10 @@ final class Schedule extends Model
     public function housekeeper(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function property(): BelongsTo
+    {
+        return $this->belongsTo(Property::class);
     }
 }
