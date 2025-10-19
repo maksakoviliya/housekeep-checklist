@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\UserController;
 use App\Livewire\Admin\Rooms;
 use App\Livewire\Admin\Tasks;
+use App\Livewire\Admin\Users\Form\Create as CreateUser;
+use App\Livewire\Admin\Users\Form\Edit as EditUser;
 use App\Livewire\Property\Form\Create as CreateProperty;
 use App\Livewire\Property\Form\Edit as EditProperty;
 use App\Livewire\Property\Room\Form\Create as CreateRoom;
@@ -33,6 +36,16 @@ Route::prefix('dashboard')->name('dashboard.')
                     ->name('rooms');
                 Route::get('/tasks', Tasks::class)
                     ->name('tasks');
+                Route::prefix('users')
+                    ->name('users.')
+                    ->group(function () {
+                        Route::get('/', [UserController::class, 'index'])
+                            ->name('index');
+                        Route::get('create', CreateUser::class)
+                            ->name('create');
+                        Route::get('{user}', EditUser::class)
+                            ->name('edit');
+                    });
             });
     });
 

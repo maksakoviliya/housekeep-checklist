@@ -18,6 +18,7 @@
                 </flux:navlist.group>
                @can('viewDashboard', App\Models\User::class)
                     <flux:navlist.group :heading="__('Admin')" class="grid">
+                        <flux:navlist.item icon="user" :href="route('dashboard.users.index')" :current="request()->is('dashboard/users') || request()->is('dashboard/users/*')" wire:navigate>{{ __('Users') }}</flux:navlist.item>
                         <flux:navlist.item icon="building-office" :href="route('dashboard.rooms')" :current="request()->routeIs('dashboard.rooms')" wire:navigate>{{ __('Rooms') }}</flux:navlist.item>
                         <flux:navlist.item icon="check" :href="route('dashboard.tasks')" :current="request()->routeIs('dashboard.tasks')" wire:navigate>{{ __('Tasks') }}</flux:navlist.item>
                     </flux:navlist.group>
