@@ -17,6 +17,8 @@
             </div>
         </form>
 
+        <flux:separator/>
+
         <livewire:property.form.delete :property="$property" />
     </x-properties.layout>
 </section>

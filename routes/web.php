@@ -37,12 +37,24 @@ Route::prefix('properties')
             ->group(function () {
                 Route::get('/', EditProperty::class)
                     ->name('edit');
-                Route::get('/rooms', [PropertyController::class, 'rooms'])
-                    ->name('rooms.index');
-                Route::get('/rooms/create', CreateRoom::class)
-                    ->name('rooms.create');
-                Route::get('/rooms/{room}', EditRoom::class)
-                    ->name('rooms.edit');
+                
+                Route::prefix('rooms')
+                    ->name('rooms.')
+                    ->group(function () {
+                        Route::get('/', [PropertyController::class, 'rooms'])
+                            ->name('index');
+                        Route::get('/create', CreateRoom::class)
+                            ->name('create');
+                        Route::get('/{room}', EditRoom::class)
+                            ->name('edit'); 
+                    });
+                
+                Route::prefix('schedule')
+                    ->name('schedule.')
+                    ->group(function () {
+                        Route::get('/', [PropertyController::class, 'schedule'])
+                            ->name('index');
+                    });
             });
     });
 

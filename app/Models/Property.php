@@ -46,4 +46,9 @@ final class Property extends Model
     {
         return $this->hasMany(Room::class);
     }
+
+    public function schedule(): HasMany
+    {
+        return $this->hasMany(Schedule::class, 'property_id');
+    }
 }

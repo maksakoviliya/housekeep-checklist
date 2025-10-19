@@ -9,6 +9,10 @@
                     'property' => $property->id,
                 ])}}" :current="request()->is('properties/*/rooms/*') || request()->is('properties/*/rooms')"
                                wire:navigate>{{ __('Rooms') }}</flux:navlist.item>
+            <flux:navlist.item href="{{route('properties.schedule.index', [
+                    'property' => $property->id,
+                ])}}" :current="request()->is('properties/*/schedule/*') || request()->is('properties/*/schedule')"
+                               wire:navigate>{{ __('Schedule') }}</flux:navlist.item>
         </flux:navlist>
     </div>
 

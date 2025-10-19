@@ -30,4 +30,12 @@ final class PropertyController extends Controller
             'rooms' => $this->propertyService->getRoomsForProperty($property),
         ]);
     }
+
+    public function schedule(Property $property): Factory|View
+    {
+        return view('properties.schedule.index', [
+            'property' => $property,
+            'schedule' => $this->propertyService->getScheduleForProperty($property),
+        ]);
+    }
 }

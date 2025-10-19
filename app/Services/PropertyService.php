@@ -58,6 +58,11 @@ final readonly class PropertyService
         return $property->rooms()->paginate();
     }
 
+    public function getScheduleForProperty(Property $property): LengthAwarePaginator
+    {
+        return $property->schedule()->paginate();
+    }
+
     public function createRoom(array $data, Property $property)
     {
         return $property->rooms()->create([
