@@ -22,7 +22,7 @@
                                 @foreach($rooms as $room)
                                     <x-table.row>
                                         <x-table.cell>{{ $room->name }}</x-table.cell>
-                                        <x-table.cell>{{ $property->created_at->format('d.m.Y H:i') }}</x-table.cell>
+                                        <x-table.cell>{{ $room->created_at->format('d.m.Y H:i') }}</x-table.cell>
                                         <x-table.cell class="text-right">
                                             <flux:tooltip content="{{ __('Edit') }}">
                                                 <flux:button href="{{ route('properties.rooms.edit', [

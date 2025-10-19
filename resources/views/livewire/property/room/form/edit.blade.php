@@ -14,8 +14,41 @@
                     <x-action-message class="me-3" on="room-updated">
                         {{ __('Saved.') }}
                     </x-action-message>
+                    <x-action-message class="me-3" on="task-deleted">
+                        {{ __('Task has been deleted.') }}
+                    </x-action-message>
                 </div>
+
+                <flux:separator/>
+
+                <div class="flex justify-between items-center">
+                    <flux:heading>{{ __('Manage tasks') }}</flux:heading>
+
+                    <flux:modal.trigger name="add-task">
+                        <flux:button size="sm" variant="primary" icon="plus">New task</flux:button>
+                    </flux:modal.trigger>
+                </div>
+                
+                <div class="space-y-2 max-h-80 overflow-y-auto">
+                    @forelse($tasks as $task)
+                        <livewire:task.item :task="$task" wire:key="task-{{ $task->id }}" />
+                    @empty
+                        <div class="text-center p-3 text-sm font-medium text-zinc-800/60 dark:text-white/60">There are no tasks yet</div>
+                    @endforelse
+                </div>
+
+                <flux:separator/>
+
+                <livewire:property.room.form.delete :room="$room" />
             </form>
         </div>
+
+        <flux:modal name="add-task" class="md:w-96">
+            <livewire:task.form.create :room="$room"  />
+        </flux:modal>
+
+        <flux:modal name="confirm-task-deletion" class="max-w-lg">
+            <livewire:task.form.delete />
+        </flux:modal>
     </x-properties.layout>
 </section>
