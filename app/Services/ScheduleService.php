@@ -13,6 +13,7 @@ use App\Models\User;
 use DateTime;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 
 final class ScheduleService
@@ -51,7 +52,7 @@ final class ScheduleService
 
     public function markTaskAsDone(Task $task, array $images, string $notes = ''): void
     {
-        $task->checklist()->create([
+        $data = [
             'user_id' => Auth::id(),
             'started_at' => now(),
             'property_id' => $task->property_id,
@@ -60,6 +61,9 @@ final class ScheduleService
             'is_checked' => true,
             'notes' => $notes,
             'image' => !empty($images) ? json_encode(array_map(fn ($image) => $image->store('checklist_images', 'public'), $images)) : null,
-        ]);
+        ];
+        
+        $task->checklist()->create($data);
+        Log::info('Task marked as done', $data);
     }
 }
