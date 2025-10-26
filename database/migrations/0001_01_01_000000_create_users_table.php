@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\UserRole;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -37,6 +38,24 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        User::factory()->create([
+            'name' => 'User',
+            'email' => 'user@mail.ru',
+            'role' => UserRole::USER->value,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@mail.ru',
+            'role' => UserRole::ADMIN->value,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Housekeeper',
+            'email' => 'housekeeper@mail.ru',
+            'role' => UserRole::HOUSEKEEPER->value,
+        ]);
     }
 
     public function down(): void
