@@ -5,12 +5,14 @@ declare(strict_types=1);
 use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
     public function up(): void
     {
+        DB::table('users')->truncate();
+        
         User::factory()->create([
             'name' => 'User',
             'email' => 'user@mail.ru',
