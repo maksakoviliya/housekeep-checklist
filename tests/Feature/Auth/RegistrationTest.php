@@ -22,6 +22,7 @@ class RegistrationTest extends TestCase
     public function test_new_users_can_register(): void
     {
         $response = Livewire::test(Register::class)
+            ->set('login', 'Test Login')
             ->set('name', 'Test User')
             ->set('email', 'test@example.com')
             ->set('phone', '+1234567890')
@@ -38,6 +39,7 @@ class RegistrationTest extends TestCase
 
         $this->assertDatabaseHas('users', [
             'name' => 'Test User',
+            'login' => 'Test Login',
             'email' => 'test@example.com',
             'phone' => '+1234567890',
             'role' => UserRole::HOUSEKEEPER->value,

@@ -13,7 +13,7 @@
             required
             autofocus
             autocomplete="login"
-            :placeholder="__('Email or phone')"
+            :placeholder="__('Login')"
         />
 
         <!-- Password -->

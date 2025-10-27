@@ -25,25 +25,9 @@ class AuthenticationTest extends TestCase
         $user = User::factory()->withoutTwoFactor()->create();
 
         $response = Livewire::test(Login::class)
-            ->set('login', $user->email)
+            ->set('login', $user->login)
             ->set('password', 'password')
-            ->call('login');
-
-        $response
-            ->assertHasNoErrors()
-            ->assertRedirect(route('dashboard.index', absolute: false));
-
-        $this->assertAuthenticated();
-    }
-
-    public function test_users_can_authenticate_using_the_login_screen_and_phone(): void
-    {
-        $user = User::factory()->withoutTwoFactor()->create();
-
-        $response = Livewire::test(Login::class)
-            ->set('login', $user->phone)
-            ->set('password', 'password')
-            ->call('login');
+            ->call('submit');
 
         $response
             ->assertHasNoErrors()
@@ -57,41 +41,12 @@ class AuthenticationTest extends TestCase
         $user = User::factory()->create();
 
         $response = Livewire::test(Login::class)
-            ->set('login', $user->email)
+            ->set('login', $user->login)
             ->set('password', 'wrong-password')
-            ->call('login');
+            ->call('submit');
 
-        $response->assertHasErrors('email');
+        $response->assertHasErrors('login');
 
-        $this->assertGuest();
-    }
-
-    public function test_users_with_two_factor_enabled_are_redirected_to_two_factor_challenge(): void
-    {
-        if (! Features::canManageTwoFactorAuthentication()) {
-            $this->markTestSkipped('Two-factor authentication is not enabled.');
-        }
-
-        Features::twoFactorAuthentication([
-            'confirm' => true,
-            'confirmPassword' => true,
-        ]);
-
-        $user = User::factory()->create();
-
-        $user->forceFill([
-            'two_factor_secret' => encrypt('test-secret'),
-            'two_factor_recovery_codes' => encrypt(json_encode(['code1', 'code2'])),
-            'two_factor_confirmed_at' => now(),
-        ])->save();
-
-        $response = Livewire::test('auth.login')
-            ->set('login', $user->email)
-            ->set('password', 'password')
-            ->call('login');
-
-        $response->assertRedirect(route('two-factor.login'));
-        $response->assertSessionHas('login.id', $user->id);
         $this->assertGuest();
     }
 

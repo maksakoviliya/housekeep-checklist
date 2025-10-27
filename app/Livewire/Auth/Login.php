@@ -57,11 +57,9 @@ class Login extends Component
      */
     protected function validateCredentials(): User
     {
-        $loginField = filter_var($this->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
-
         /** @var User $user */
         $user = Auth::getProvider()->retrieveByCredentials([
-            $loginField => $this->login,
+            'login' => $this->login,
             'password' => $this->password,
         ]);
 
