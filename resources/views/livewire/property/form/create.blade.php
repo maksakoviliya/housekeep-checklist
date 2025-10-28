@@ -1,4 +1,18 @@
-<div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
+<div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl max-w-lg"
+     x-data="{  error: null,
+                lat: $wire.entangle('lat').live,
+                lng: $wire.entangle('lng').live
+      }"
+     x-init="
+            window.addEventListener('geolocation-error', e => { 
+                error = '{{ __('Denied Geolocation.') }}'; 
+            })
+            window.addEventListener('geolocation-success', e => { 
+                console.log('success', e.detail);
+                lat = e.detail.lat;
+                lng = e.detail.lng;
+            })
+        ">
     <div class="flex items-center justify-between gap-4">
         <div class="sm:flex-auto">
             <flux:heading level="3">{{ __('Create property') }}</flux:heading>
@@ -6,10 +20,32 @@
         </div>
     </div>
 
-    <form wire:submit="submit" class="my-6 w-full space-y-6">
+    <form wire:submit="createProperty" class="my-6 w-full space-y-6">
         <flux:input wire:model="name" :label="__('Name')" type="text" required autofocus autocomplete="name"/>
-        <flux:input wire:model="beds" :label="__('Beds')" type="number" required autocomplete="beds"/>
-        <flux:input wire:model="baths" :label="__('Baths')" type="number" required autocomplete="baths"/>
+
+        @can('assignProperty', \App\Models\Property::class)
+            <flux:select wire:model="userId" :label="__('Owner')" required>
+                <option value="">{{ __('Select owner') }}</option>
+                @foreach($users ?? [] as $user)
+                    <option value="{{ $user->id }}">{{ '@' . $user->login }} - {{ $user->name }}</option>
+                @endforeach
+            </flux:select>
+        @endcan
+
+        <template x-if="error">
+            <flux:callout
+                    variant="danger"
+                    icon="exclamation-circle"
+                    class="mt-6"
+            >
+                <span x-text="error"></span>
+            </flux:callout>
+        </template>
+        
+        <div class="grid grid-cols-2 gap-4">
+            <flux:input wire:model="lat" :label="__('Lattitude')" type="text" required autofocus autocomplete="lat"/>
+            <flux:input wire:model="lng" :label="__('Longitude')" type="text" required autofocus autocomplete="lng"/>
+        </div>
 
         <div class="flex items-center gap-4">
             <div class="flex items-center justify-end">

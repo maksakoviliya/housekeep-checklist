@@ -16,8 +16,11 @@
                     <x-table.table>
                         <x-slot:head>
                             <x-table.heading>{{ __('Name') }}</x-table.heading>
-                            <x-table.heading>{{ __('Beds') }}</x-table.heading>
-                            <x-table.heading>{{ __('Baths') }}</x-table.heading>
+                            <x-table.heading>{{ __('Lattitude') }}</x-table.heading>
+                            <x-table.heading>{{ __('Longitude') }}</x-table.heading>
+                            @can('assignProperty', \App\Models\Property::class)
+                                <x-table.heading>{{ __('Owner') }}</x-table.heading>
+                            @endcan
                             <x-table.heading>{{ __('Created') }}</x-table.heading>
                             <x-table.heading></x-table.heading>
                         </x-slot:head>
@@ -25,8 +28,17 @@
                             @foreach($properties as $property)
                                 <x-table.row>
                                     <x-table.cell>{{ $property->name }}</x-table.cell>
-                                    <x-table.cell>{{ $property->beds }}</x-table.cell>
-                                    <x-table.cell>{{ $property->baths }}</x-table.cell>
+                                    <x-table.cell>{{ $property->lat }}</x-table.cell>
+                                    <x-table.cell>{{ $property->lng }}</x-table.cell>
+                                    @can('assignProperty', \App\Models\Property::class)
+                                        <x-table.cell>
+                                            <flux:link href="{{ route('dashboard.users.edit', [
+                                                'user' => $property->owner->id,
+                                            ]) }}" wire:navigate>
+                                                {{ '@' . $property->owner->login }}
+                                            </flux:link>
+                                        </x-table.cell>
+                                    @endcan
                                     <x-table.cell>{{ $property->created_at->format('d.m.Y H:i') }}</x-table.cell>
                                     <x-table.cell class="text-right">
                                         <flux:tooltip content="{{ __('Edit') }}">

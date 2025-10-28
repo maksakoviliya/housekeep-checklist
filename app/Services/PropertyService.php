@@ -30,8 +30,8 @@ final readonly class PropertyService
         return Property::query()
             ->create([
                 'name' => Arr::get($data, 'name'),
-                'beds' => Arr::get($data, 'beds'),
-                'baths' => Arr::get($data, 'baths'),
+                'lat' => Arr::get($data, 'lat'),
+                'lng' => Arr::get($data, 'lng'),
                 'user_id' => Arr::get($data, 'user_id'),
             ]);
     }
@@ -40,8 +40,8 @@ final readonly class PropertyService
     {
         $data = [
             'name' => Arr::get($data, 'name'),
-            'beds' => Arr::get($data, 'beds'),
-            'baths' => Arr::get($data, 'baths'),
+            'lat' => Arr::get($data, 'lat'),
+            'lng' => Arr::get($data, 'lng'),
         ];
 
         $userId = Arr::get($data, 'userId');

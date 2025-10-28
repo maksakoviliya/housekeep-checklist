@@ -4,8 +4,22 @@
     <x-properties.layout heading="{{ $property->name }}" :subheading="__('Update your property')" :property="$property">
         <form wire:submit="submit" class="my-6 w-full space-y-6">
             <flux:input wire:model="name" :label="__('Name')" type="text" required autofocus autocomplete="name"/>
-            <flux:input wire:model="beds" :label="__('Beds')" type="number" required autocomplete="beds"/>
-            <flux:input wire:model="baths" :label="__('Baths')" type="number" required autocomplete="baths"/>
+
+            @can('assignProperty', \App\Models\Property::class)
+                <flux:select wire:model="userId" :label="__('Owner')" required>
+                    <option value="">{{ __('Select owner') }}</option>
+                    @foreach($users ?? [] as $user)
+                        <option value="{{ $user->id }}">{{ '@' . $user->login }} - {{ $user->name }}</option>
+                    @endforeach
+                </flux:select>
+            @endcan
+
+            <div class="grid grid-cols-2 gap-4">
+                <flux:input wire:model="lat" :label="__('Lattitude')" type="text" required autofocus
+                            autocomplete="lat"/>
+                <flux:input wire:model="lng" :label="__('Longitude')" type="text" required autofocus
+                            autocomplete="lng"/>
+            </div>
 
             <div class="flex items-center gap-4">
                 <div class="flex items-center justify-end">
@@ -19,6 +33,6 @@
 
         <flux:separator/>
 
-        <livewire:property.form.delete :property="$property" />
+        <livewire:property.form.delete :property="$property"/>
     </x-properties.layout>
 </section>

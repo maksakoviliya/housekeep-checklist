@@ -18,8 +18,6 @@ use Illuminate\Support\Carbon;
  *
  * @property int $id
  * @property string $name
- * @property int $beds
- * @property int $baths
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read User $owner
@@ -32,9 +30,9 @@ final class Property extends Model
 
     protected $fillable = [
         'user_id',
+        'lng',
+        'lat',
         'name',
-        'beds',
-        'baths',
     ];
 
     public function owner(): BelongsTo

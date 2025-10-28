@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Livewire\Property\Form;
 
+use App\Models\Property;
 use App\Models\User;
 use App\Services\PropertyService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -15,15 +17,17 @@ final class Create extends Component
 {
     #[Validate('required|string|max:255')]
     public string $name = '';
+	
+    #[Validate('required|numeric|between:-90,90', attribute: 'latitude')]
+    public string $lat = '';
+	
+    #[Validate('required|numeric|between:-180,180', attribute: 'longitude')]
+    public string $lng = '';
 
-    #[Validate('required|numeric|min:1|max:100')]
-    public ?int $beds = null;
-
-    #[Validate('required|numeric|min:1|max:100')]
-    public ?int $baths = null;
-
-    #[Validate('required|exists:users,id')]
+    #[Validate('required|exists:users,id', attribute: 'owner')]
     public ?int $userId = null;
+    
+    public Collection $users;
 
     private ?PropertyService $propertyService;
 
@@ -32,21 +36,27 @@ final class Create extends Component
         $this->propertyService = new PropertyService;
         /** @var User $user */
         $user = auth()->user();
-        if ($user->can('assignProperty')) {
+        if ($user->can('assignProperty', Property::class)) {
             $this->userId = null;
+            $this->users = User::query()->users()->get();
         } else {
             $this->userId = $user->id;
         }
     }
 
-    public function submit(): null
+    public function mount(): void
+    {
+        $this->dispatch('property-form-mounted');
+    }
+
+    public function createProperty(): null
     {
         $this->validate();
 
         $property = $this->propertyService->createProperty([
             'name' => $this->name,
-            'beds' => $this->beds,
-            'baths' => $this->baths,
+            'lat' => $this->lat,
+            'lng' => $this->lng,
             'user_id' => $this->userId,
         ]);
 

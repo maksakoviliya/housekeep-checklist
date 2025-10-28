@@ -19,6 +19,17 @@
                 autocomplete="name"
                 :placeholder="__('Full name')"
         />
+        
+        <!-- Login -->
+        <flux:input
+                wire:model="login"
+                :label="__('Login')"
+                type="text"
+                required
+                autofocus
+                autocomplete="login"
+                :placeholder="__('login')"
+        />
 
         <!-- Email Address -->
         <flux:input

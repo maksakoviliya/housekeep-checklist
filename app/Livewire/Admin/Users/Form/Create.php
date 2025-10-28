@@ -15,6 +15,8 @@ use Livewire\Component;
 final class Create extends Component
 {
     public string $name = '';
+    
+    public string $login = '';
 
     public string $email = '';
 
@@ -28,6 +30,7 @@ final class Create extends Component
     {
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
+            'login' => ['required', 'string', 'max:255', 'unique:'.User::class],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'phone' => ['required', 'string', 'max:255', 'unique:'.User::class],
             'role' => ['required', 'string', new Enum(UserRole::class)],
