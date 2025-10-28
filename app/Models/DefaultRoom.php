@@ -12,7 +12,7 @@ final class DefaultRoom extends Model
 {
     /** @use HasFactory<DefaultRoomFactory> */
     use HasFactory;
-    
+
     protected $fillable = [
         'name',
     ];

@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Property;
 use App\Models\Schedule;
-use Illuminate\Http\Request;
 
 final class ScheduleController extends Controller
 {

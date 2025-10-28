@@ -12,7 +12,7 @@ final class DefaultTask extends Model
 {
     /** @use HasFactory<DefaultTaskFactory> */
     use HasFactory;
-    
+
     protected $fillable = [
         'name',
     ];

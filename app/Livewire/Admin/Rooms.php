@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Livewire\Admin;
 
 use App\Models\DefaultRoom;
-use App\Models\Room;
 use Flux\Flux;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -18,7 +17,7 @@ final class Rooms extends Component
 {
     #[Validate('required|string|max:255')]
     public string $name = '';
-    
+
     public DefaultRoom $activeRoom;
 
     #[Computed]
@@ -30,11 +29,11 @@ final class Rooms extends Component
     public function createRoom(): void
     {
         $this->validate();
-        
+
         DefaultRoom::query()->create([
             'name' => $this->name,
         ]);
-        
+
         $this->name = '';
         Flux::modal('create-default-room')->close();
     }
@@ -49,7 +48,7 @@ final class Rooms extends Component
         $this->activeRoom->delete();
         Flux::modal('confirm-default-room-deleting')->close();
     }
-    
+
     public function render(): Factory|View
     {
         return view('livewire.admin.rooms');

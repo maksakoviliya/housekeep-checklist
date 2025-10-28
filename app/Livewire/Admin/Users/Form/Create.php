@@ -15,7 +15,7 @@ use Livewire\Component;
 final class Create extends Component
 {
     public string $name = '';
-    
+
     public string $login = '';
 
     public string $email = '';
@@ -36,14 +36,14 @@ final class Create extends Component
             'role' => ['required', 'string', new Enum(UserRole::class)],
             'password' => ['required', 'string', Password::defaults()],
         ]);
-        
+
         $validated['password'] = bcrypt($validated['password']);
-        
+
         User::query()->create($validated);
-        
+
         $this->redirectRoute('dashboard.users.index', [], navigate: true);
     }
-    
+
     public function render(): Factory|View
     {
         return view('livewire.admin.users.form.create');

@@ -12,9 +12,9 @@ final class Delete extends Component
 {
     public function submitDeleting(): void
     {
-        $this->dispatch('task-deleting-confirmed');    
+        $this->dispatch('task-deleting-confirmed');
     }
-    
+
     public function render(): Factory|View
     {
         return view('livewire.task.form.delete');

@@ -12,7 +12,7 @@ final class Checklist extends Model
 {
     /** @use HasFactory<ChecklistFactory> */
     use HasFactory;
-    
+
     protected $fillable = [
         'task_id',
         'property_id',

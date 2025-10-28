@@ -13,10 +13,10 @@ use Illuminate\Support\Arr;
 final readonly class PropertyService
 {
     private ImageService $imageService;
-    
+
     public function __construct()
     {
-        $this->imageService = new ImageService();
+        $this->imageService = new ImageService;
     }
 
     public function getPropertiesForUser(User $user): ?LengthAwarePaginator
@@ -53,7 +53,7 @@ final readonly class PropertyService
             'lng' => Arr::get($params, 'lng'),
             'address' => Arr::get($params, 'address'),
         ];
-        if (!is_string(Arr::get($params, 'photo'))) {
+        if (! is_string(Arr::get($params, 'photo'))) {
             $data['photo'] = $this->imageService->storeImage(Arr::get($params, 'photo'));
         }
 

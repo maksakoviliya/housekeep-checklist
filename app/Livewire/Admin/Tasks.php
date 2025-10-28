@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Admin;
 
-use App\Models\DefaultRoom;
 use App\Models\DefaultTask;
 use Flux\Flux;
 use Illuminate\Contracts\View\Factory;
@@ -47,7 +46,7 @@ class Tasks extends Component
         $this->activeTask->delete();
         Flux::modal('confirm-default-task-deleting')->close();
     }
-    
+
     public function render(): Factory|View
     {
         return view('livewire.admin.tasks');

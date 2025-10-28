@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Livewire\Task\Form;
 
-use App\Livewire\Property\Room\Form\Edit;
 use App\Models\Room;
 use App\Services\TaskService;
 use Flux\Flux;
@@ -17,11 +16,11 @@ final class Create extends Component
 {
     #[Validate('required|string|max:1000')]
     public string $task = '';
-    
+
     private TaskService $taskService;
-    
+
     public Room $room;
-    
+
     public function __construct()
     {
         $this->taskService = new TaskService;
@@ -36,7 +35,7 @@ final class Create extends Component
     {
         return view('livewire.task.form.create');
     }
-    
+
     public function submit(): void
     {
         $this->validate();

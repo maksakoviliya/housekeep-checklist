@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Livewire\Schedule;
 
-use App\Models\Property;
 use App\Models\Schedule;
 use App\Services\ScheduleService;
 use Illuminate\Contracts\View\Factory;
@@ -22,7 +21,7 @@ final class HousekeeperCalendar extends Component
 
     public function __construct()
     {
-        $this->scheduleService = new ScheduleService();
+        $this->scheduleService = new ScheduleService;
     }
 
     public function mount(): void
@@ -41,7 +40,7 @@ final class HousekeeperCalendar extends Component
     {
         $this->redirect(route('properties.schedule.view', [
             'property' => Arr::get($data, 'event.extendedProps.property_id'),
-            'schedule' => Arr::get($data, 'event.id')
+            'schedule' => Arr::get($data, 'event.id'),
         ]));
     }
 

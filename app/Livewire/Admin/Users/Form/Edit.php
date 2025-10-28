@@ -24,7 +24,7 @@ final class Edit extends Component
     public string $role = UserRole::USER->value;
 
     public string $password = '';
-    
+
     public User $user;
 
     public function mount(User $user): void
@@ -46,7 +46,7 @@ final class Edit extends Component
             'password' => ['nullable', 'string', Password::defaults()],
         ]);
 
-        if (!empty($validated['password'])) {
+        if (! empty($validated['password'])) {
             $validated['password'] = bcrypt($validated['password']);
         } else {
             unset($validated['password']);
@@ -56,7 +56,7 @@ final class Edit extends Component
 
         $this->dispatch('user-updated');
     }
-    
+
     public function render(): Factory|View
     {
         return view('livewire.admin.users.form.edit');

@@ -8,7 +8,7 @@ use Illuminate\Http\UploadedFile;
 
 final class ImageService
 {
-    public function storeImage(UploadedFile $image = null, string $directory = 'images'): ?string
+    public function storeImage(?UploadedFile $image = null, string $directory = 'images'): ?string
     {
         return $image?->store($directory, 'public');
     }

@@ -3,7 +3,6 @@
 namespace App\Livewire\Schedule\Form;
 
 use App\Enums\UserRole;
-use App\Models\Property;
 use App\Models\Schedule;
 use App\Models\User;
 use App\Services\ScheduleService;
@@ -52,7 +51,7 @@ class Edit extends Component
 
     public function __construct()
     {
-        $this->scheduleService = new ScheduleService();
+        $this->scheduleService = new ScheduleService;
     }
 
     public function setEvent($data): void
@@ -78,7 +77,7 @@ class Edit extends Component
 
         $this->schedule->update([
             'user_id' => $this->housekeeperId,
-            'scheduled_at' => new Carbon("$this->date $this->time")
+            'scheduled_at' => new Carbon("$this->date $this->time"),
         ]);
 
         Flux::modal('schedule-edit')->close();

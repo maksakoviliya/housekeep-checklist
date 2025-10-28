@@ -21,7 +21,7 @@ final class PropertyController extends Controller
         if ($request->user()->cannot('create', Property::class)) {
             return view('properties.housekeeper');
         }
-        
+
         return view('properties.index', [
             'properties' => $this->propertyService->getPropertiesForUser($request->user()),
         ]);

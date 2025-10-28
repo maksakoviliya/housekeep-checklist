@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-
 final class ScheduleService
 {
     public function create(Property $property, User $housekeeper, DateTime $scheduledAt)
@@ -35,6 +34,7 @@ final class ScheduleService
             $color = $item->status->color();
             /** @var User $user */
             $user = Auth::user();
+
             return [
                 'id' => $item->id,
                 'user_id' => $item->user_id,
@@ -60,9 +60,9 @@ final class ScheduleService
             'finished_at' => now(),
             'is_checked' => true,
             'notes' => $notes,
-            'image' => !empty($images) ? json_encode(array_map(fn ($image) => $image->store('checklist_images', 'public'), $images)) : null,
+            'image' => ! empty($images) ? json_encode(array_map(fn ($image) => $image->store('checklist_images', 'public'), $images)) : null,
         ];
-        
+
         $task->checklist()->create($data);
         Log::info('Task marked as done', $data);
     }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Room;
-use Illuminate\Database\Eloquent\Collection;
 
 final readonly class RoomService
 {

@@ -12,9 +12,9 @@ return new class extends Migration
     {
         Schema::create('default_rooms', function (Blueprint $table) {
             $table->id();
-            
+
             $table->string('name');
-            
+
             $table->timestamps();
         });
     }

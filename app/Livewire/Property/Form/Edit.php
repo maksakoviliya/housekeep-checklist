@@ -16,7 +16,7 @@ use Livewire\WithFileUploads;
 class Edit extends Component
 {
     use WithFileUploads;
-    
+
     public Property $property;
 
     #[Validate('required|string|max:255')]

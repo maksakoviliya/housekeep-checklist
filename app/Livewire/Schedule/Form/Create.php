@@ -21,12 +21,12 @@ final class Create extends Component
 {
     #[Validate('required|date_format:Y-m-d')]
     public string $date = '';
-    
+
     public Property $property;
 
     #[Validate('required|exists:users,id')]
     public ?int $housekeeperId = null;
-    
+
     public array $timeAvailable = [
         '08:00', '09:00', '10:00', '11:00', '12:00',
         '13:00', '14:00', '15:00', '16:00', '17:00',
@@ -35,12 +35,12 @@ final class Create extends Component
 
     #[Validate('required|date_format:H:i')]
     public string $time;
-    
+
     private ScheduleService $scheduleService;
 
     public function __construct()
     {
-        $this->scheduleService =new ScheduleService();
+        $this->scheduleService = new ScheduleService;
     }
 
     public function mount(Property $property): void
@@ -66,13 +66,13 @@ final class Create extends Component
     public function submit(): void
     {
         $this->validate();
-        
+
         $this->scheduleService->create(
             $this->property,
             User::query()->find($this->housekeeperId),
             new Carbon("$this->date $this->time")
         );
-        
+
         Flux::modal('schedule-cleaning')->close();
         $this->dispatch('schedule-created');
     }

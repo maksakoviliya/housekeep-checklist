@@ -6,7 +6,6 @@ namespace App\Livewire\Property\Form;
 
 use App\Models\Property;
 use App\Models\User;
-use App\Services\ImageService;
 use App\Services\PropertyService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -18,16 +17,16 @@ use Livewire\WithFileUploads;
 final class Create extends Component
 {
     use WithFileUploads;
-    
+
     #[Validate('required|string|max:255')]
     public string $name = '';
-	
+
     #[Validate('required|numeric|between:-90,90', attribute: 'latitude')]
     public string $lat = '';
-	
+
     #[Validate('required|numeric|between:-180,180', attribute: 'longitude')]
     public string $lng = '';
-    
+
     #[Validate('required|string|max:1000')]
     public string $address = '';
 
@@ -36,14 +35,14 @@ final class Create extends Component
 
     #[Validate('required|exists:users,id', attribute: 'owner')]
     public ?int $userId = null;
-    
+
     public Collection $users;
 
     private PropertyService $propertyService;
-    
+
     public function __construct()
     {
-        $this->propertyService = new PropertyService();
+        $this->propertyService = new PropertyService;
         /** @var User $user */
         $user = auth()->user();
         if ($user->can('assignProperty', Property::class)) {

@@ -11,7 +11,6 @@ use App\Services\ScheduleService;
 use Flux\Flux;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\UploadedFile;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -34,7 +33,7 @@ final class Item extends Component
 
     public function __construct()
     {
-        $this->scheduleService = new ScheduleService();
+        $this->scheduleService = new ScheduleService;
     }
 
     public function mount(Schedule $schedule): void
@@ -61,7 +60,7 @@ final class Item extends Component
             $this->images,
             $this->notes,
         );
-        
+
         Flux::modal('create-checklist')->close();
     }
 

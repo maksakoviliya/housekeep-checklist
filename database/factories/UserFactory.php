@@ -46,17 +46,17 @@ class UserFactory extends Factory
         ]);
     }
 
-	public function user(): static
-	{
-		return $this->state(fn(array $attributes) => [
-			'role' => UserRole::USER
-		]);
-	}
+    public function user(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => UserRole::USER,
+        ]);
+    }
 
-	public function housekeeper(): static
-	{
-		return $this->state(fn(array $attributes) => [
-			'role' => UserRole::HOUSEKEEPER
-		]);
-	}
+    public function housekeeper(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => UserRole::HOUSEKEEPER,
+        ]);
+    }
 }

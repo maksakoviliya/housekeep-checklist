@@ -66,12 +66,12 @@ final class Edit extends Component
     {
         Flux::modal('confirm-task-deletion')->close();
 
-        if (!$this->deletingTaskId) {
+        if (! $this->deletingTaskId) {
             return;
         }
 
         $deletingTask = Task::query()->find($this->deletingTaskId);
-        if (!$deletingTask) {
+        if (! $deletingTask) {
             return;
         }
 

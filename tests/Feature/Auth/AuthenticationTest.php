@@ -5,7 +5,6 @@ namespace Tests\Feature\Auth;
 use App\Livewire\Auth\Login;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Fortify\Features;
 use Livewire\Livewire;
 use Tests\TestCase;
 

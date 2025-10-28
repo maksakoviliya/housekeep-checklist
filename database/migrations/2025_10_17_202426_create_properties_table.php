@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-			
+
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('photo')->nullable();
             $table->text('address');
-			$table->decimal('lat');
-			$table->decimal('lng');
-			
+            $table->decimal('lat');
+            $table->decimal('lng');
+
             $table->timestamps();
         });
     }

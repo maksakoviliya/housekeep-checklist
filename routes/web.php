@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\PropertyController;
-use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\UserController;
 use App\Livewire\Admin\Rooms;
 use App\Livewire\Admin\Tasks;
@@ -105,4 +104,4 @@ Route::middleware(['auth'])->group(function () {
         ->name('two-factor.show');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

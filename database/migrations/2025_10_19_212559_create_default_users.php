@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         DB::table('users')->truncate();
-        
+
         User::factory()->create([
             'login' => 'admin',
             'name' => 'Admin',
             'email' => 'admin@mail.ru',
             'role' => UserRole::ADMIN->value,
         ]);
-        
+
         User::factory()->create([
             'login' => 'user',
             'name' => 'User',
