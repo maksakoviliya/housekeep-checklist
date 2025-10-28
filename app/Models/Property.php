@@ -33,6 +33,7 @@ final class Property extends Model
         'lng',
         'lat',
         'address',
+        'photo',
         'name',
     ];
 

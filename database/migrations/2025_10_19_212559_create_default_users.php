@@ -19,6 +19,13 @@ return new class extends Migration
             'email' => 'admin@mail.ru',
             'role' => UserRole::ADMIN->value,
         ]);
+        
+        User::factory()->create([
+            'login' => 'user',
+            'name' => 'User',
+            'email' => 'user@mail.ru',
+            'role' => UserRole::USER->value,
+        ]);
     }
 
     public function down(): void

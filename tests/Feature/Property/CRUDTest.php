@@ -9,6 +9,7 @@ use App\Models\Property;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -33,6 +34,7 @@ class CRUDTest extends TestCase
 			->set('lat', $data['lat'])
 			->set('lng', $data['lng'])
 			->set('address', $data['address'])
+            ->set('photo', UploadedFile::fake()->image('avatar.jpg'))
 			->call('createProperty');
         
 		$this->assertDatabaseHas('properties', [

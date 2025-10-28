@@ -6,15 +6,19 @@ namespace App\Livewire\Property\Form;
 
 use App\Models\Property;
 use App\Models\User;
+use App\Services\ImageService;
 use App\Services\PropertyService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 final class Create extends Component
 {
+    use WithFileUploads;
+    
     #[Validate('required|string|max:255')]
     public string $name = '';
 	
@@ -27,16 +31,19 @@ final class Create extends Component
     #[Validate('required|string|max:1000')]
     public string $address = '';
 
+    #[Validate('image|max:1024')]
+    public $photo;
+
     #[Validate('required|exists:users,id', attribute: 'owner')]
     public ?int $userId = null;
     
     public Collection $users;
 
-    private ?PropertyService $propertyService;
-
+    private PropertyService $propertyService;
+    
     public function __construct()
     {
-        $this->propertyService = new PropertyService;
+        $this->propertyService = new PropertyService();
         /** @var User $user */
         $user = auth()->user();
         if ($user->can('assignProperty', Property::class)) {
@@ -62,6 +69,7 @@ final class Create extends Component
             'lng' => $this->lng,
             'address' => $this->address,
             'user_id' => $this->userId,
+            'photo' => $this->photo,
         ]);
 
         return $this->redirect(route('properties.edit', [

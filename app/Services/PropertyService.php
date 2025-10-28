@@ -12,6 +12,13 @@ use Illuminate\Support\Arr;
 
 final readonly class PropertyService
 {
+    private ImageService $imageService;
+    
+    public function __construct()
+    {
+        $this->imageService = new ImageService();
+    }
+
     public function getPropertiesForUser(User $user): ?LengthAwarePaginator
     {
         if ($user->role === UserRole::ADMIN) {
@@ -34,19 +41,23 @@ final readonly class PropertyService
                 'lng' => Arr::get($data, 'lng'),
                 'address' => Arr::get($data, 'address'),
                 'user_id' => Arr::get($data, 'user_id'),
+                'photo' => $this->imageService->storeImage(Arr::get($data, 'photo')),
             ]);
     }
 
-    public function updateProperty(Property $property, array $data): Property
+    public function updateProperty(Property $property, array $params): Property
     {
         $data = [
-            'name' => Arr::get($data, 'name'),
-            'lat' => Arr::get($data, 'lat'),
-            'lng' => Arr::get($data, 'lng'),
-            'address' => Arr::get($data, 'address'),
+            'name' => Arr::get($params, 'name'),
+            'lat' => Arr::get($params, 'lat'),
+            'lng' => Arr::get($params, 'lng'),
+            'address' => Arr::get($params, 'address'),
         ];
+        if (!is_string(Arr::get($params, 'photo'))) {
+            $data['photo'] = $this->imageService->storeImage(Arr::get($params, 'photo'));
+        }
 
-        $userId = Arr::get($data, 'userId');
+        $userId = Arr::get($params, 'userId');
         if ($userId && $property->user_id !== $userId) {
             $data['user_id'] = $userId;
         }

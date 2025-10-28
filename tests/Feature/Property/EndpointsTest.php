@@ -27,7 +27,7 @@ final class EndpointsTest extends TestCase
 
 	public function test_create_endpoint_is_available()
 	{
-		$this->actingAs(User::factory()->create());
+		$this->actingAs(User::factory()->user()->create());
 		$response = $this->get(route('properties.create'));
 		$response->assertStatus(200);
 	}

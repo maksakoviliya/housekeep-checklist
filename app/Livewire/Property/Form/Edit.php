@@ -11,9 +11,12 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Edit extends Component
 {
+    use WithFileUploads;
+    
     public Property $property;
 
     #[Validate('required|string|max:255')]
@@ -32,6 +35,9 @@ class Edit extends Component
     public ?int $userId = null;
 
     public Collection $users;
+
+    #[Validate('required')]
+    public $photo;
 
     private ?PropertyService $propertyService;
 
@@ -59,6 +65,7 @@ class Edit extends Component
         $this->lat = $property->lat;
         $this->lng = $property->lng;
         $this->address = $property->address;
+        $this->photo = $property->photo;
         $this->userId = $property->user_id;
     }
 
@@ -71,6 +78,7 @@ class Edit extends Component
             'lat' => $this->lat,
             'lng' => $this->lng,
             'address' => $this->address,
+            'photo' => $this->photo,
             'user_id' => $this->userId,
         ]);
 

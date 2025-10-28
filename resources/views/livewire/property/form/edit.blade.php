@@ -3,6 +3,11 @@
 
     <x-properties.layout heading="{{ $property->name }}" :subheading="__('Update your property')" :property="$property">
         <form wire:submit="submit" class="my-6 w-full space-y-6">
+            @if ($photo)
+                <img src="{{ is_string($photo) ? \Illuminate\Support\Facades\Storage::disk('public')->url($photo) : $photo->temporaryUrl() }}" class="w-92 aspect-3/2 object-cover rounded-xl" alt="">
+            @endif
+            <flux:input type="file" wire:model="photo" label="photo"/>
+                
             <flux:input wire:model="name" :label="__('Name')" type="text" required autofocus autocomplete="name"/>
 
             @can('assignProperty', \App\Models\Property::class)

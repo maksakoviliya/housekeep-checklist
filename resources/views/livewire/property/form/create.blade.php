@@ -21,6 +21,11 @@
     </div>
 
     <form wire:submit="createProperty" class="my-6 w-full space-y-6">
+        @if ($photo)
+            <img src="{{ $photo->temporaryUrl() }}" class="w-92 aspect-3/2 object-cover rounded-xl" alt="">
+        @endif
+        <flux:input type="file" wire:model="photo" label="photo"/>
+            
         <flux:input wire:model="name" :label="__('Name')" type="text" required autofocus autocomplete="name"/>
 
         @can('assignProperty', \App\Models\Property::class)
@@ -34,7 +39,7 @@
 
         <flux:textarea wire:model="address" :label="__('Address')" type="text" required autofocus
                        autocomplete="address"/>
-        
+
         <div class="grid grid-cols-2 gap-4">
             <flux:input wire:model="lat" :label="__('Lattitude')" type="text" required autofocus autocomplete="lat"/>
             <flux:input wire:model="lng" :label="__('Longitude')" type="text" required autofocus autocomplete="lng"/>
