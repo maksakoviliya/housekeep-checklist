@@ -14,24 +14,10 @@ return new class extends Migration
         DB::table('users')->truncate();
         
         User::factory()->create([
-            'login' => 'user',
-            'name' => 'User',
-            'email' => 'user@mail.ru',
-            'role' => UserRole::USER->value,
-        ]);
-
-        User::factory()->create([
             'login' => 'admin',
             'name' => 'Admin',
             'email' => 'admin@mail.ru',
             'role' => UserRole::ADMIN->value,
-        ]);
-
-        User::factory()->create([
-            'login' => 'housekeeper',
-            'name' => 'Housekeeper',
-            'email' => 'housekeeper@mail.ru',
-            'role' => UserRole::HOUSEKEEPER->value,
         ]);
     }
 
