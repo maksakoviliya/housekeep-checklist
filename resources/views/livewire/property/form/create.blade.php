@@ -12,7 +12,7 @@
                 lat = e.detail.lat;
                 lng = e.detail.lng;
             })
-        ">
+        " xmlns:flux="http://www.w3.org/1999/html">
     <div class="flex items-center justify-between gap-4">
         <div class="sm:flex-auto">
             <flux:heading level="3">{{ __('Create property') }}</flux:heading>
@@ -32,6 +32,14 @@
             </flux:select>
         @endcan
 
+        <flux:textarea wire:model="address" :label="__('Address')" type="text" required autofocus
+                       autocomplete="address"/>
+        
+        <div class="grid grid-cols-2 gap-4">
+            <flux:input wire:model="lat" :label="__('Lattitude')" type="text" required autofocus autocomplete="lat"/>
+            <flux:input wire:model="lng" :label="__('Longitude')" type="text" required autofocus autocomplete="lng"/>
+        </div>
+
         <template x-if="error">
             <flux:callout
                     variant="danger"
@@ -41,11 +49,6 @@
                 <span x-text="error"></span>
             </flux:callout>
         </template>
-        
-        <div class="grid grid-cols-2 gap-4">
-            <flux:input wire:model="lat" :label="__('Lattitude')" type="text" required autofocus autocomplete="lat"/>
-            <flux:input wire:model="lng" :label="__('Longitude')" type="text" required autofocus autocomplete="lng"/>
-        </div>
 
         <div class="flex items-center gap-4">
             <div class="flex items-center justify-end">

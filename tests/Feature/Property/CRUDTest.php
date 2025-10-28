@@ -23,6 +23,7 @@ class CRUDTest extends TestCase
 			'name' => $this->faker->sentence,
 			'lat' => $this->faker->latitude,
 			'lng' => $this->faker->longitude,
+			'address' => $this->faker->address,
 		];
 
 		$this->actingAs(User::factory()->user()->create());
@@ -31,12 +32,14 @@ class CRUDTest extends TestCase
 			->set('name', $data['name'])
 			->set('lat', $data['lat'])
 			->set('lng', $data['lng'])
+			->set('address', $data['address'])
 			->call('createProperty');
-
+        
 		$this->assertDatabaseHas('properties', [
 			'name' => $data['name'],
 			'lat' => $data['lat'],
 			'lng' => $data['lng'],
+			'address' => $data['address'],
 		]);
 
 		$property = Property::query()->where('name', $data['name'])->first();

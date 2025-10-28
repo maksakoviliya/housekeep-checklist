@@ -32,6 +32,7 @@ final readonly class PropertyService
                 'name' => Arr::get($data, 'name'),
                 'lat' => Arr::get($data, 'lat'),
                 'lng' => Arr::get($data, 'lng'),
+                'address' => Arr::get($data, 'address'),
                 'user_id' => Arr::get($data, 'user_id'),
             ]);
     }
@@ -42,6 +43,7 @@ final readonly class PropertyService
             'name' => Arr::get($data, 'name'),
             'lat' => Arr::get($data, 'lat'),
             'lng' => Arr::get($data, 'lng'),
+            'address' => Arr::get($data, 'address'),
         ];
 
         $userId = Arr::get($data, 'userId');

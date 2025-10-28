@@ -32,6 +32,7 @@ final class Property extends Model
         'user_id',
         'lng',
         'lat',
+        'address',
         'name',
     ];
 

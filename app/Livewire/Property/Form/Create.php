@@ -23,6 +23,9 @@ final class Create extends Component
 	
     #[Validate('required|numeric|between:-180,180', attribute: 'longitude')]
     public string $lng = '';
+    
+    #[Validate('required|string|max:1000')]
+    public string $address = '';
 
     #[Validate('required|exists:users,id', attribute: 'owner')]
     public ?int $userId = null;
@@ -57,6 +60,7 @@ final class Create extends Component
             'name' => $this->name,
             'lat' => $this->lat,
             'lng' => $this->lng,
+            'address' => $this->address,
             'user_id' => $this->userId,
         ]);
 

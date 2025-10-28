@@ -25,6 +25,9 @@ class Edit extends Component
     #[Validate('required|numeric|between:-180,180', attribute: 'longitude')]
     public ?string $lng = null;
 
+    #[Validate('required|string|max:1000')]
+    public string $address = '';
+
     #[Validate('required|exists:users,id')]
     public ?int $userId = null;
 
@@ -55,6 +58,7 @@ class Edit extends Component
         $this->name = $property->name;
         $this->lat = $property->lat;
         $this->lng = $property->lng;
+        $this->address = $property->address;
         $this->userId = $property->user_id;
     }
 
@@ -66,6 +70,7 @@ class Edit extends Component
             'name' => $this->name,
             'lat' => $this->lat,
             'lng' => $this->lng,
+            'address' => $this->address,
             'user_id' => $this->userId,
         ]);
 
