@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\UserController;
 use App\Livewire\Admin\Rooms;
@@ -103,5 +104,8 @@ Route::middleware(['auth'])->group(function () {
         )
         ->name('two-factor.show');
 });
+
+Route::post('/livewire/upload-file', [FileUploadController::class, 'handle'])
+    ->name('livewire.upload-file');
 
 require __DIR__.'/auth.php';
