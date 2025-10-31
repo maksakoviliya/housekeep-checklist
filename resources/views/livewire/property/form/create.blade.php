@@ -24,7 +24,7 @@
 {{--        @if ($photo)--}}
 {{--            <img src="{{ $photo->temporaryUrl() }}" class="w-92 aspect-3/2 object-cover rounded-xl" alt="">--}}
 {{--        @endif--}}
-        <flux:input type="file" wire:model="photo" label="photo"/>
+        <flux:input type="file" wire:model="photo" :label="__('Photo')"/>
             
         <flux:input wire:model="name" :label="__('Name')" type="text" required autofocus autocomplete="name"/>
 

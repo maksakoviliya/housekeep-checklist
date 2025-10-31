@@ -45,6 +45,7 @@ window.getCurrentPosition = function getCurrentPosition() {
                 }))
             },
             function (error) {
+                console.error('❌ Geolocation error', error);
                 window.dispatchEvent(new CustomEvent('geolocation-error', {
                     detail: { error: error.message }
                 }))
