@@ -35,22 +35,26 @@ window.initCalendar = function initCalendar(events = []) {
 
 async function requestGeolocation() {
     if (!navigator.geolocation) {
-        alert('Geolocation is not supported by this browser.');
+        alert('Geolocation not supported.');
         return null;
     }
 
     try {
-        const position = await new Promise((resolve, reject) =>
-            navigator.geolocation.getCurrentPosition(resolve, reject)
+        const pos = await new Promise((resolve, reject) =>
+            navigator.geolocation.getCurrentPosition(resolve, reject, {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            })
         );
-
-        const {latitude: lat, longitude: lng} = position.coords;
+        const {latitude: lat, longitude: lng} = pos.coords;
         window.dispatchEvent(new CustomEvent('geolocation-success', {detail: {lat, lng}}));
         return {lat, lng};
     } catch (error) {
-        console.log("error", error);
-        window.dispatchEvent(new CustomEvent('geolocation-error', {detail: {error: error.message}}));
-        return null;
+        console.warn('⚠️ GPS unavailable, using IP location');
+        const ip = await fetch('https://ipapi.co/json/').then(r => r.json());
+        window.dispatchEvent(new CustomEvent('geolocation-fallback', {detail: ip}));
+        return {lat: ip.latitude, lng: ip.longitude, from: 'ip'};
     }
 }
 
