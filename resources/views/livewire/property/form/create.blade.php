@@ -7,11 +7,19 @@
             window.addEventListener('geolocation-error', e => { 
                 error = '{{ __('Denied Geolocation.') }}'; 
             })
-            window.addEventListener('geolocation-success', e => { 
-                console.log('success', e.detail);
-                lat = e.detail.lat;
-                lng = e.detail.lng;
-            })
+             window.addEventListener('geolocation-success', (e) => {
+                console.log('geolocation-success', e)
+                let {lat, lng} = e.detail;
+                $wire.set('lat', lat);
+                $wire.set('lng', lng);
+            });
+        
+            window.addEventListener('geolocation-fallback', (e) => {
+                console.log('geolocation-fallback', e)
+                let {latitude, longitude} = e.detail;
+                $wire.set('lat', latitude);
+                $wire.set('lng', longitude);
+            });
         " xmlns:flux="http://www.w3.org/1999/html">
     <div class="flex items-center justify-between gap-4">
         <div class="sm:flex-auto">
@@ -63,18 +71,3 @@
     </form>
 </div>
 
-<script>
-    window.addEventListener('geolocation-success', (e) => {
-        console.log('geolocation-success', e)
-        let {lat, lng} = e.detail;
-        $wire.set('lat', lat);
-        $wire.set('lng', lng);
-    });
-
-    window.addEventListener('geolocation-fallback', (e) => {
-        console.log('geolocation-fallback', e)
-        let {latitude, longitude} = e.detail;
-        $wire.set('lat', latitude);
-        $wire.set('lng', longitude);
-    });
-</script>
