@@ -52,7 +52,7 @@ async function requestGeolocation() {
         return {lat, lng};
     } catch (error) {
         console.warn('⚠️ GPS unavailable, using IP location');
-        const ip = await fetch('https://ipapi.co/json/').then(r => r.json());
+        const ip = await fetch('https://ipwho.is/').then(r => r.json());
         window.dispatchEvent(new CustomEvent('geolocation-fallback', {detail: ip}));
         console.log('🌍 IP location:', ip);
         return {lat: ip.latitude, lng: ip.longitude, from: 'ip'};
