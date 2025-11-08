@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Livewire\Property\Form;
 
+use App\Enums\UserRole;
 use App\Models\Property;
 use App\Models\User;
 use App\Services\PropertyService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -46,8 +48,11 @@ final class Create extends Component
         /** @var User $user */
         $user = auth()->user();
         if ($user->can('assignProperty', Property::class)) {
-            $this->userId = null;
-            $this->users = User::query()->users()->get();
+            $this->userId = Auth::id();
+            $this->users = User::query()->whereIn('role', [
+				UserRole::USER->value,
+	            UserRole::ADMIN->value
+            ])->get();
         } else {
             $this->userId = $user->id;
         }

@@ -38,9 +38,13 @@
 
         @can('assignProperty', \App\Models\Property::class)
             <flux:select wire:model="userId" :label="__('Owner')" required>
-                <option value="">{{ __('Select owner') }}</option>
                 @foreach($users ?? [] as $user)
-                    <option value="{{ $user->id }}">{{ '@' . $user->login }} - {{ $user->name }}</option>
+                    <option value="{{ $user->id }}">
+                        {{ '@' . $user->login }} - {{ $user->name }}
+                        @if(Auth::id() === $user->id)
+                            <span>(me)</span>
+                        @endif
+                    </option>
                 @endforeach
             </flux:select>
         @endcan
