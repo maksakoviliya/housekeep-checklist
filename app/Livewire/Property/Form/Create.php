@@ -12,6 +12,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -58,10 +59,46 @@ final class Create extends Component
         }
     }
 
-    public function mount(): void
-    {
-        $this->dispatch('property-form-mounted');
-    }
+	public function updatedAddress($value): void
+	{
+		if (strlen($value) > 5) { // Минимальная длина адреса
+			$this->getCoordinatesFromAddress($value);
+		}
+	}
+
+	private function getCoordinatesFromAddress($address): void
+	{
+		try {
+			// Пример с использованием Nominatim (OpenStreetMap)
+			$response = Http::timeout(10)
+				->withHeaders([
+					'User-Agent' => config('app.name') . ' Contact: your@email.com',
+					'Referer' => config('app.url')
+				])
+				->get('https://nominatim.openstreetmap.org/search', [
+					'q' => $address,
+					'format' => 'json',
+					'limit' => 1,
+					'addressdetails' => 1
+				]);
+
+			if ($response->successful()) {
+				$data = $response->json();
+				if (!empty($data)) {
+					$this->lat = $data[0]['lat'];
+					$this->lng = $data[0]['lon'];
+
+					// Диспатчим событие для обновления карты (если нужно)
+					$this->dispatch('coordinatesUpdated', [
+						'lat' => $this->lat,
+						'lng' => $this->lng
+					]);
+				}
+			}
+		} catch (\Exception $e) {
+			Log::error('Geocoding error: ' . $e->getMessage());
+		}
+	}
 
     public function createProperty(): null
     {

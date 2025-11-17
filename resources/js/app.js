@@ -63,8 +63,3 @@ const startToCleanBtn = document.getElementById('start-to-clean');
 startToCleanBtn?.addEventListener('click', async function () {
     await requestGeolocation()
 })
-
-window.addEventListener('property-form-mounted', async function () {
-    await requestGeolocation()
-})
-

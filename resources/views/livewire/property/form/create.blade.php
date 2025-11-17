@@ -49,12 +49,21 @@
             </flux:select>
         @endcan
 
-        <flux:textarea wire:model="address" :label="__('Address')" type="text" required autofocus
+        <flux:textarea wire:model.live.debounce.1500ms="address"
+                       :label="__('Address')"
+                       type="text"
+                       required
+                       autofocus
                        autocomplete="address"/>
 
-        <div class="grid grid-cols-2 gap-4">
-            <flux:input wire:model="lat" :label="__('Lattitude')" type="text" required autofocus autocomplete="lat"/>
-            <flux:input wire:model="lng" :label="__('Longitude')" type="text" required autofocus autocomplete="lng"/>
+        <div class="grid grid-cols-2 gap-4 relative">
+            <div class="absolute inset-0 flex flex-col items-center justify-center bg-white/20 rounded-lg overflow-hidden hidden" wire:loading.class.remove="hidden">
+                <flux:icon.loading />
+            </div>
+            <flux:input wire:model="lat" wire:loading.attr="disabled" :label="__('Lattitude')" type="text" required autofocus
+                        autocomplete="lat"/>
+            <flux:input wire:model="lng" wire:loading.attr="disabled" :label="__('Longitude')" type="text" required autofocus
+                        autocomplete="lng"/>
         </div>
 
         <template x-if="error">
