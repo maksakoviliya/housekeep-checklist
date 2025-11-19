@@ -27,19 +27,8 @@ final class PropertyController extends Controller
         ]);
     }
 
-    public function rooms(Property $property): Factory|View
+    public function edit(Property $property): Factory|View
     {
-        return view('properties.rooms.index', [
-            'property' => $property,
-            'rooms' => $this->propertyService->getRoomsForProperty($property),
-        ]);
-    }
-
-    public function schedule(Property $property): Factory|View
-    {
-        return view('properties.schedule.index', [
-            'property' => $property,
-            'schedule' => $this->propertyService->getScheduleForProperty($property),
-        ]);
+        return view('properties.edit', compact('property'));
     }
 }

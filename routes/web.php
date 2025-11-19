@@ -8,10 +8,6 @@ use App\Livewire\Admin\Tasks;
 use App\Livewire\Admin\Users\Form\Create as CreateUser;
 use App\Livewire\Admin\Users\Form\Edit as EditUser;
 use App\Livewire\Property\Form\Create as CreateProperty;
-use App\Livewire\Property\Form\Edit as EditProperty;
-use App\Livewire\Property\Room\Form\Create as CreateRoom;
-use App\Livewire\Property\Room\Form\Edit as EditRoom;
-use App\Livewire\Schedule\Item as ScheduleItem;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -58,32 +54,7 @@ Route::prefix('properties')
         Route::get('create', CreateProperty::class)
             ->can('create', Property::class)
             ->name('create');
-
-        Route::prefix('{property}')
-            ->group(function () {
-                Route::get('/', EditProperty::class)
-                    ->name('edit');
-
-                Route::prefix('rooms')
-                    ->name('rooms.')
-                    ->group(function () {
-                        Route::get('/', [PropertyController::class, 'rooms'])
-                            ->name('index');
-                        Route::get('/create', CreateRoom::class)
-                            ->name('create');
-                        Route::get('/{room}', EditRoom::class)
-                            ->name('edit');
-                    });
-
-                Route::prefix('schedule')
-                    ->name('schedule.')
-                    ->group(function () {
-                        Route::get('/', [PropertyController::class, 'schedule'])
-                            ->name('index');
-                        Route::get('{schedule}', ScheduleItem::class)
-                            ->name('view');
-                    });
-            });
+        Route::get('{property}', [PropertyController::class, 'edit'])->name('edit');
     });
 
 Route::middleware(['auth'])->group(function () {
@@ -108,4 +79,4 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/livewire/upload-file', [FileUploadController::class, 'handle'])
     ->name('livewire.upload-file');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -27,6 +27,9 @@ final class Create extends Component
     #[Validate('required|string|max:255')]
     public string $name = '';
 
+    #[Validate('boolean')]
+    public bool $isDefault = false;
+
     private PropertyService $propertyService;
 
     public function __construct()
@@ -39,18 +42,16 @@ final class Create extends Component
         $this->property = $property;
     }
 
-    public function submit(): null
+    public function submit(): void
     {
         $this->validate();
 
-        $room = $this->propertyService->createRoom([
+        $this->propertyService->createRoom([
             'name' => $this->name,
+            'is_default' => $this->isDefault
         ], $this->property);
 
-        return $this->redirect(route('properties.rooms.edit', [
-            'property' => $this->property->id,
-            'room' => $room->id,
-        ]), true);
+        $this->dispatch('new-room-created');
     }
 
     public function render(): Factory|View

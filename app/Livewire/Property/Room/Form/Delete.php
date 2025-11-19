@@ -23,9 +23,7 @@ final class Delete extends Component
     {
         Flux::modal('confirm-room-deletion')->close();
         $this->room->delete();
-        $this->redirect(route('properties.rooms.index', [
-            'property' => $this->room->property_id,
-        ]), true);
+        $this->dispatch('room-deleted');
     }
 
     public function render(): Factory|View

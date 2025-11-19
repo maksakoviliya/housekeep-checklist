@@ -1,35 +1,14 @@
-<div class="flex items-start max-md:flex-col">
-    <div class="me-10 w-full pb-4 md:w-[220px]">
-        <flux:navlist>
-            <flux:navlist.item href="{{ route('properties.edit', [
-                    'property' => $property->id,
-                ]) }}" :current="request()->routeIs('properties.edit')"
-                               wire:navigate>{{ __('Info') }}</flux:navlist.item>
-            <flux:navlist.item href="{{route('properties.rooms.index', [
-                    'property' => $property->id,
-                ])}}" :current="request()->is('properties/*/rooms/*') || request()->is('properties/*/rooms')"
-                               wire:navigate>{{ __('Rooms') }}</flux:navlist.item>
-            <flux:navlist.item href="{{route('properties.schedule.index', [
-                    'property' => $property->id,
-                ])}}" :current="request()->is('properties/*/schedule/*') || request()->is('properties/*/schedule')"
-                               wire:navigate>{{ __('Schedule') }}</flux:navlist.item>
-        </flux:navlist>
-    </div>
-
-    <flux:separator class="md:hidden"/>
-
-    <div class="flex-1 self-stretch max-md:pt-6">
-        <div class="mt-5 w-full max-w-2xl">
-            <div class="flex items-center gap-4 justify-between w-full">
-                <div>
-                    <flux:heading>{{ $heading ?? '' }}</flux:heading>
-                    <flux:subheading>{{ $subheading ?? '' }}</flux:subheading>
-                </div>
-
-                {{ $headingAction ?? '' }}
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 items-start max-md:flex-col">
+    <div class="mt-5 w-full">
+        <div class="flex items-center gap-4 justify-between w-full">
+            <div>
+                <flux:heading>{{ $heading ?? '' }}</flux:heading>
+                <flux:subheading>{{ $subheading ?? '' }}</flux:subheading>
             </div>
 
-            {{ $slot }}
+            {{ $headingAction ?? '' }}
         </div>
+
+        {{ $slot }}
     </div>
 </div>

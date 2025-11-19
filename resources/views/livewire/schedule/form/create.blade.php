@@ -1,4 +1,4 @@
-<form wire:submit="submit" class="space-y-6">
+<form wire:submit="submit" class="space-y-6 text-left">
     <div class="space-y-4">
        <div class="">
            <flux:heading size="lg">{{ __('Schedule cleaning') }}</flux:heading>

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Property\Form;
 
+use App\Enums\UserRole;
 use App\Models\Property;
 use App\Models\User;
 use App\Services\PropertyService;
@@ -49,7 +50,10 @@ class Edit extends Component
         $user = auth()->user();
         if ($user->can('assignProperty', Property::class)) {
             $this->userId = null;
-            $this->users = User::query()->users()->get();
+	        $this->users = User::query()->whereIn('role', [
+		        UserRole::USER->value,
+		        UserRole::ADMIN->value
+	        ])->get();
         } else {
             $this->userId = $user->id;
         }

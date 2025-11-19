@@ -1,17 +1,12 @@
-<section class="mt-10 space-y-6">
-    <div class="relative mb-5">
-        <flux:heading>{{ __('Delete room') }}</flux:heading>
-        <flux:subheading>{{ __('Delete your room and all of its data') }}</flux:subheading>
-    </div>
-
-    <flux:modal.trigger name="confirm-room-deletion">
-        <flux:button variant="danger">
-            {{ __('Delete room') }}
-        </flux:button>
+<div>
+    <flux:modal.trigger name="{{ 'confirm-room-deletion_' . $room->id }}">
+        <flux:tooltip content="{{ __('Delete') }}">
+            <flux:button size="sm" variant="danger" icon="trash"></flux:button>
+        </flux:tooltip>
     </flux:modal.trigger>
 
-    <flux:modal name="confirm-room-deletion" class="max-w-lg">
-        <form class="space-y-6">
+    <flux:modal name="{{ 'confirm-room-deletion_' . $room->id }}" class="max-w-lg">
+        <form class="space-y-6 text-left">
             <div>
                 <flux:heading size="lg">{{ __('Are you sure you want to delete your room?') }}</flux:heading>
 
@@ -31,4 +26,4 @@
             </div>
         </form>
     </flux:modal>
-</section>
+</div>

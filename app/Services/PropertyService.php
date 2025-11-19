@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Enums\UserRole;
+use App\Models\DefaultRoom;
 use App\Models\Property;
 use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -53,7 +54,7 @@ final readonly class PropertyService
             'lng' => Arr::get($params, 'lng'),
             'address' => Arr::get($params, 'address'),
         ];
-        if (! is_string(Arr::get($params, 'photo'))) {
+        if (!is_string(Arr::get($params, 'photo'))) {
             $data['photo'] = $this->imageService->storeImage(Arr::get($params, 'photo'));
         }
 
@@ -66,20 +67,26 @@ final readonly class PropertyService
         return $property->refresh();
     }
 
-    public function getRoomsForProperty(Property $property): LengthAwarePaginator
+    public function getRoomsForProperty(Property $property)
     {
-        return $property->rooms()->paginate();
+        return $property->rooms ?? [];
     }
 
-    public function getScheduleForProperty(Property $property): LengthAwarePaginator
+    public function getScheduleForProperty(Property $property)
     {
-        return $property->schedule()->paginate();
+        return $property->schedule;
     }
 
     public function createRoom(array $data, Property $property)
     {
+        $name = Arr::get($data, 'name');
+        if (Arr::get($data, 'is_default')) {
+            DefaultRoom::query()->create([
+                'name' => $name
+            ]);
+        }
         return $property->rooms()->create([
-            'name' => Arr::get($data, 'name'),
+            'name' => $name
         ]);
     }
 }
